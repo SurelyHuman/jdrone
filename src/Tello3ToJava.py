@@ -40,10 +40,7 @@ def recv():
     while True:
         try:
             data, server = sock.recvfrom(1518)
-            # sys.stdout.write(data.decode(encoding="utf-8") + '\n')
-            # sys.stdout.write(data.decode(encoding="utf-16") + '\n')
-            sys.stdout.write(data.decode(encoding="ascii") + '\n')
-            # sys.stdout.write(data.decode() + '\n')
+            sys.stdout.write(data.decode(encoding="utf-8") + '\n')
             sys.stdout.flush()
         except Exception:
             sys.stdout.write('\nExit . . .\n' + '\n')

@@ -89,7 +89,8 @@ public class TelloJavaToPython {
      */
     public static void launchInitialization(String filePath) {
     	
-    	String cmd = "python " + filePath;
+    	String cmd = "python " + filePath; // for mac and linux users
+    	// String cmd = "python executable location " + filePath; // windows users enter explicit path to python executable
     	
     	try {
 
@@ -142,7 +143,8 @@ public class TelloJavaToPython {
      */
     public static void runProgramArray(String[] cmds, String filePath) {
     	
-    	String cmd = "python " + filePath;
+    	String cmd = "python " + filePath; // for mac and linux users
+    	// String cmd = "python executable location " + filePath; // windows users enter explicit path to python executable
     	
     	try {
 
@@ -178,7 +180,8 @@ public class TelloJavaToPython {
      */
     public static void runProgramScanner(String filePath) {
     	
-    	String cmd = "python " + filePath;
+    	String cmd = "python " + filePath; // for mac and linux users
+    	// String cmd = "python executable location " + filePath; // windows users enter explicit path to python executable
     	
     	try {
 
