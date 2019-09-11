@@ -54,11 +54,11 @@ public class TelloJavaToPython {
     		call = cmds[i];
     		print(call);
     		response = pipe(call);
-    		while(response.equals("")){
+    		/*while(response.equals("")){
     			
-    		}
+    		}*/
     		print(response);
-    		response = "";
+    		//response = "";
     	}
     }
     
@@ -76,9 +76,9 @@ public class TelloJavaToPython {
     	call = cmd;
     	print(call);
     	response = pipe(call);
-    	while(response.equals("")){
+    	/*while(response.equals("")){
 
-    	}
+    	}*/
     	print(response);
     	return response;
     }
