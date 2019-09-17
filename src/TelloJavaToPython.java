@@ -13,6 +13,7 @@ public class TelloJavaToPython {
     public static BufferedWriter out;
     public static Process p;
     public static String pathToPython = Constants.PYTHON_PATH + " ";
+    public static String filePath = Constants.FILE_PATH_DEVELOPER;
     
     /***
      * 
@@ -71,9 +72,8 @@ public class TelloJavaToPython {
     
     /***
      * 
-     * @param filePath
      */
-    public static void launchInitialization(String filePath) {
+    public static void launchInitialization() {
     	
     	String cmd = pathToPython + filePath;
     	
@@ -126,9 +126,8 @@ public class TelloJavaToPython {
      * along with the required intial and ending commands required by the Tello SDK
      * and the required ordering of the "takeoff" and "land" messages
      * @param cmds
-     * @param filePath
      */
-    public static void runProgramArray(String[] cmds, String filePath) {
+    public static void runProgramArray(String[] cmds) {
     	
     	String cmd = pathToPython + filePath;
     	
@@ -165,9 +164,8 @@ public class TelloJavaToPython {
      * original python script execution but instead using a scanner to pipe strings to the Tello SDK
      * Once running you must enter "command" in the console before you can access the other
      * functions of the Tello SDK
-     * @param filePath
      */
-    public static void runProgramScanner(String filePath) {
+    public static void runProgramScanner() {
     	
     	String cmd = pathToPython + filePath;
     	
@@ -214,13 +212,12 @@ public class TelloJavaToPython {
      */
     public static void main(String[] args) {
     	
-    	String filePath = Constants.FILE_PATH_DEVELOPER; 
     	String[] cmds = {"command", "battery?", "takeoff", "ccw 360", "flip b", "land", "end"};
     	
-    	runProgramArray(cmds, filePath);
-    	//runProgramScanner(filePath);
+    	runProgramArray(cmds);
+    	//runProgramScanner();
     	
-    	//launchInitialization(filePath); // step 1 (required)
+    	//launchInitialization(); // step 1 (required)
     	//commandDrone("battery?"); // step 2
     	//commandDrone("takeoff"); // step 3
     	//commandDrone("land"); // step 4 (if you did step 2 and you don't do this...)

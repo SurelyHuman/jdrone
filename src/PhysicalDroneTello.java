@@ -4,17 +4,15 @@ import java.util.concurrent.TimeUnit;
 
 public class PhysicalDroneTello implements PhysicalDrone {
 	
-	private String filepath;
-	
-	public PhysicalDroneTello(String filePath) {
-		this.filepath = filePath;
+	public PhysicalDroneTello() {
+		
 	}
 	
 	/***
 	 * MUST BE ADDED TO BEGINNING OF ANY LAUNCH SEQUENCE!
 	 */
 	public void beginProgram() {
-		TelloJavaToPython.launchInitialization(filepath);
+		TelloJavaToPython.launchInitialization();
 	}
 	
 	/***
