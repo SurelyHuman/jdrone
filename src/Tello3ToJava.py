@@ -25,7 +25,7 @@ local_video_port = 11111
 locaddr = (host, port)
 #  videoaddr = (host, local_video_port)
 
-# Create a UDP sockets
+# Create UDP sockets
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #  socket_video = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -57,10 +57,7 @@ while True:
     try:
         msg = sys.stdin.readline().strip()
 
-        if not msg:
-            break
-
-        if 'end' in msg:
+        if not msg or 'end' in msg:
             sys.stdout.write('Terminating Operations...' + '\n')
             sys.stdout.flush()
             sock.close()
