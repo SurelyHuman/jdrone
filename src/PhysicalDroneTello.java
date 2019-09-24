@@ -8,20 +8,14 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		
 	}
 	
-	/***
-	 * MUST BE ADDED TO BEGINNING OF ANY LAUNCH SEQUENCE!
-	 */
 	public void beginProgram() {
 		TelloJavaToPython.launchInitialization();
 	}
 	
-	/***
-	 * MUST BE ADDED TO THE END OF ANY LAUNCH SEQUENCE!
-	 */
 	public void endProgram() {
 		TelloJavaToPython.launchCompletion();
 	}
-
+	
 	public void takeoff() {
 		TelloJavaToPython.commandDrone("takeoff");
 	}
@@ -33,11 +27,11 @@ public class PhysicalDroneTello implements PhysicalDrone {
 	public void streamOn() {
 		TelloJavaToPython.commandDrone("streamon");
 	}
-
+	
 	public void streamOff() {
 		TelloJavaToPython.commandDrone("streamoff");
 	}
-
+	
 	public void missionPadOn() {
 		TelloJavaToPython.commandDrone("mon");
 	}
@@ -45,16 +39,16 @@ public class PhysicalDroneTello implements PhysicalDrone {
 	public void missionPadOff() {
 		TelloJavaToPython.commandDrone("moff");
 	}
-
+	
 	public void missionPadDirection(int param) {
 		TelloJavaToPython.commandDrone("mdirection " + param);
 	}
-
+	
 	public void flyUpward(int up) {
 		if (up < 20 || up > 500) return;
 		TelloJavaToPython.commandDrone("up " + up);
 	}
-
+	
 	public void flyDown(int down) {
 		if (down < 20 || down > 500) return;
 		TelloJavaToPython.commandDrone("down " + down);
@@ -75,15 +69,11 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		TelloJavaToPython.commandDrone("left " + left);
 	}
 
-	
 	public void flyRight(int right) {
 		if (right < 20 || right > 500) return;
 		TelloJavaToPython.commandDrone("right " + right);
 	}
 
-	/***
-	 * coordinates are cartesian, compensation below
-	 */	
 	public void gotoXYZ(int x, int y, int z, int speed) {
 		if (x < -500 || x > 500 || y < -500 || y > 500 || z < -500 || z > 500 
 				|| speed < 10 || speed > 100) return;
@@ -92,7 +82,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		TelloJavaToPython.commandDrone(fstr);
 	}
 
-	
 	public void gotoMissionPadXYZ(int x, int y, int z, int speed, String ID) {
 		if (x < -500 || x > 500 || y < -500 || y > 500 || z < -500 || z > 500 
 				|| speed < 10 || speed > 100) return;
@@ -101,7 +90,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		TelloJavaToPython.commandDrone(fstr);
 	}
 
-	
 	public void flyCurve(int x1, int y1, int z1, int x2, int y2, int z2, int speed) {
 		if (x1 < -500 || x1 > 500 || y1 < -500 || y1 > 500 || z1 < -500 || z1 > 500 ||
 				x2 < -500 || x2 > 500 || y2 < -500 || y2 > 500 || z2 < -500 || z2 > 500
@@ -110,7 +98,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		TelloJavaToPython.commandDrone(fstr);
 	}
 
-	
 	public void flyCurveMissionPad(int x1, int y1, int z1, int x2, int y2, int z2, int speed, String ID) {
 		if (x1 < -500 || x1 > 500 || y1 < -500 || y1 > 500 || z1 < -500 || z1 > 500 ||
 				x2 < -500 || x2 > 500 || y2 < -500 || y2 > 500 || z2 < -500 || z2 > 500
@@ -119,30 +106,25 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		TelloJavaToPython.commandDrone(fstr);
 	}
 
-	
 	public void turnCW(int degrees) {
 		if (degrees < 1 || degrees > 360) return;
 		TelloJavaToPython.commandDrone("cw " + degrees);
 	}
 
-	
 	public void turnCCW(int degrees) {
 		if (degrees < 1 || degrees > 360) return;
 		TelloJavaToPython.commandDrone("ccw " + degrees);
 	}
 
-	
 	public void flip(String direction) {
 		TelloJavaToPython.commandDrone("flip " + direction);
 	}
 
-	
 	public void jumpMissionPad(int x, int y, int z, int speed, int yaw, String ID1, String ID2) {
 		// TODO Auto-generated method stub
 
 	}
 
-	
 	public void hoverInPlace(int seconds) {
 		int cycles = seconds/15;
 		int remainder = seconds % 15;
@@ -174,38 +156,31 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		}	
 	}
 	
-
-	
 	public void stopInPlace() {
 		TelloJavaToPython.commandDrone("stop");
 	}
-	
 	
 	public void setSpeed(int speed) {
 		if (speed < 10 || speed > 100) return;
 		TelloJavaToPython.commandDrone("speed " + speed);
 	}
 
-	
 	public double getSpeed() {
 		String speed = TelloJavaToPython.commandDrone("speed?");
 		return Double.parseDouble(speed);
 	}
 
-	
 	public int getBattery() {
 		String battery = TelloJavaToPython.commandDrone("battery?");
 		return Integer.parseInt(battery);
 	}
 
-	
 	public int getFlightTime() {
 		String time = TelloJavaToPython.commandDrone("time?");
 		String timeInt = time.substring(0, time.length() - 1);
 		return Integer.parseInt(timeInt);
 	}
 
-	
 	public int getHeight() {
 		String height = TelloJavaToPython.commandDrone("height?");
 		String heightInt = height.substring(0, height.length() - 2); // in decimeters
@@ -213,7 +188,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return heightInCentimeters;
 	}
 
-	
 	public int getTemp() {
 		String temperature = TelloJavaToPython.commandDrone("temp?");
 		String[] arrayOfStr = temperature.split("~|C", 2);
@@ -222,7 +196,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return (temp1 + temp2)/2;
 	}
 
-	
 	public int getAttitudePitch() {
 		String attitude = TelloJavaToPython.commandDrone("attitude?");
 		String[] arrayOfStr = attitude.split(":|;", 7);
@@ -230,7 +203,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return pitch;
 	}
 
-	
 	public int getAttitudeRoll() {
 		String attitude = TelloJavaToPython.commandDrone("attitude?");
 		String[] arrayOfStr = attitude.split(":|;", 7);
@@ -238,7 +210,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return roll;
 	}
 
-	
 	public int getAttitudeYaw() {
 		String attitude = TelloJavaToPython.commandDrone("attitude?");
 		String[] arrayOfStr = attitude.split(":|;", 7);
@@ -246,13 +217,11 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return pitch;
 	}
 
-	
 	public double getBarometer() {
 		String barometer = TelloJavaToPython.commandDrone("baro?");
 		return Double.parseDouble(barometer);
 	}
 
-	
 	public double getAccelerationX() {
 		String acceleration = TelloJavaToPython.commandDrone("acceleration?");
 		String[] arrayOfStr = acceleration.split(":|;", 7);
@@ -260,7 +229,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return x;
 	}
 
-	
 	public double getAccelerationY() {
 		String acceleration = TelloJavaToPython.commandDrone("acceleration?");
 		String[] arrayOfStr = acceleration.split(":|;", 7);
@@ -268,7 +236,6 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return y;
 	}
 
-	
 	public double getAccelerationZ() {
 		String acceleration = TelloJavaToPython.commandDrone("acceleration?");
 		String[] arrayOfStr = acceleration.split(":|;", 7);
@@ -276,24 +243,20 @@ public class PhysicalDroneTello implements PhysicalDrone {
 		return z;
 	}
 
-	
 	public int getTOF() {
 		String timeOfFlight = TelloJavaToPython.commandDrone("height?");
 		String timeOfFlightInt = timeOfFlight.substring(0, timeOfFlight.length() - 2);
 		return Integer.parseInt(timeOfFlightInt);
 	}
 
-	
 	public String getWIFI() {
 		return TelloJavaToPython.commandDrone("wifi?");
 	}
 
-	
 	public String getVersionSDK() {
 		return TelloJavaToPython.commandDrone("sdk?");
 	}
 
-	
 	public String getSerialNumber() {
 		return TelloJavaToPython.commandDrone("sn?");
 	}
