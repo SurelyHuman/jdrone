@@ -12,12 +12,12 @@ public class TelloJavaToPython {
     public static BufferedReader inp;
     public static BufferedWriter out;
     public static Process p;
-    public static String pathToPython = Constants.PYTHON_PATH + " ";
-    public static String filePath = Constants.FILE_PATH_DEVELOPER;
+    private static final String pathToPython = Constants.PYTHON_PATH + " ";
+    private static final String filePath = Constants.FILE_PATH_DEVELOPER;
     
     /***
-     * 
-     * @param s
+     * Helper method for simplification of print statements 
+     * @param s string to be printed
      */
     public static void print(String s) {
     	System.out.println(s);
@@ -208,7 +208,7 @@ public class TelloJavaToPython {
     	
     /***
      * 
-     * @param args
+     * @param args not used
      */
     public static void main(String[] args) {
     	
