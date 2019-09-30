@@ -1,8 +1,9 @@
 
 
 /***
- * 
- * @author MasterControlProgram
+ * Convenience class for storing constants needed for piping, conversion, and flight
+ * 09/30/2019 v1.0
+ * @author MasterControlProgram: Seth Lewis
  *
  */
 

@@ -3,8 +3,9 @@ import java.io.*;
 import java.util.Scanner;
 
 /***
- * 
- * @author MasterControlProgram
+ * Static class for communnicating between java and python with the intent of controlling a DJI Tello Drone
+ * 9/30/2019 v1.0
+ * @author MasterControlProgram: Seth Lewis
  *
  */
 public class TelloJavaToPython {
@@ -23,6 +24,12 @@ public class TelloJavaToPython {
     	System.out.println(s);
     }
 
+    /***
+     * This method pipes strings to the Tello's Python control program
+     * Strings are sent to the script and stripped of extra characters then sent to the drone
+     * @param msg String command message to be sent to Tello
+     * @return String representation of the Tello response message
+     */
     public static String pipe(String msg) {
     	String ret;
 
@@ -42,8 +49,9 @@ public class TelloJavaToPython {
     }
     
     /***
-     * 
-     * @param cmds
+     * A method that takes in an array of Tello commands and then passes them on to the drone via the single command method
+     * Only used by the sample programs below, not efficient or advised for flight routines beyond testing
+     * @param cmds String array of Tello command instructions
      */
     public static void commandDrone(String[] cmds) {
 
@@ -53,9 +61,9 @@ public class TelloJavaToPython {
     }
     
     /***
-     * 
-     * @param cmd
-     * @return
+     * A method that sends the Tello command strings on to the piping method and prints the call and response to verify correctness
+     * @param cmd String Tello command instruction
+     * @return String reponse of Tell can be used in conditionals for better flight control and informational messages
      */
     public static String commandDrone(String cmd) {
     	
@@ -71,7 +79,7 @@ public class TelloJavaToPython {
     }
     
     /***
-     * 
+     * Method that contains all the necessary elements to set the drone to recieve additional commands
      */
     public static void launchInitialization() {
     	
@@ -102,7 +110,7 @@ public class TelloJavaToPython {
     }
     
     /***
-     * 
+     * Method that cleans up any remaing assets and terminates a flight sequence
      */
     public static void launchCompletion() {
     	
@@ -207,7 +215,7 @@ public class TelloJavaToPython {
     }
     	
     /***
-     * 
+     * Main contains various test calls to verify proper connection to drone, execution of piping, and drone control
      * @param args not used
      */
     public static void main(String[] args) {

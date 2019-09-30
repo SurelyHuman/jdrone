@@ -1,7 +1,8 @@
 
 
 /***
- * 
+ * Interface containing a selection of possible drone flight commands mostly independent of drone manufacturer
+ * 09/30/2019
  * @author MasterControlProgram
  *
  */
