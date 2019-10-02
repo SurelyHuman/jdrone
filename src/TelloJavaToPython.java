@@ -3,16 +3,17 @@ import java.io.*;
 import java.util.Scanner;
 
 /***
- * Static class for communnicating between java and python with the intent of controlling a DJI Tello Drone
+ * Class for communnicating between java and python with the intent of controlling a DJI Tello Drone
+ * All methods are public and static
  * 9/30/2019 v1.0
  * @author MasterControlProgram: Seth Lewis
  *
  */
 public class TelloJavaToPython {
 
-    public static BufferedReader inp;
-    public static BufferedWriter out;
-    public static Process p;
+    private static BufferedReader inp;
+    private static BufferedWriter out;
+    private static Process p;
     private static final String pathToPython = Constants.PYTHON_PATH + " ";
     private static final String filePath = Constants.FILE_PATH_DEVELOPER;
     
@@ -43,7 +44,7 @@ public class TelloJavaToPython {
     		return ret;
     	}
     	catch (Exception err) {
-
+    		err.printStackTrace();
     	}
     	return "error";
     }
