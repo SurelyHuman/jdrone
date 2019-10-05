@@ -128,45 +128,45 @@ public interface PhysicalDrone {
 	/***
 	 * Requests drone fly along a curve in three dimensions defined by two points 
 	 * Starts with current location as origin flying through first point and ending at second point
-	 * @param x1
-	 * @param y1
-	 * @param z1
-	 * @param x2
-	 * @param y2
-	 * @param z2
-	 * @param speed
+	 * @param x1 integer value of mid point along the x axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param y1 integer value of mid point along the y axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param z1 integer value of mid point along the z axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param x2 integer value of end point along the x axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param y2 integer value of end point along the y axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param z2 integer value of end point along the z axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
 	 */
 	public void flyCurve(int x1, int y1, int z1, int x2, int y2, int z2, int speed);
 	
 	/***
 	 * Requests drone fly along a curve in three dimensions defined by two points and then search for symbol recognition system pattern with specific ID at location  
 	 * Starts with current location as origin flying through first point and ending at second point
-	 * @param x1
-	 * @param y1
-	 * @param z1
-	 * @param x2
-	 * @param y2
-	 * @param z2
-	 * @param speed
-	 * @param ID
+	 * @param x1 integer value of mid point along the x axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param y1 integer value of mid point along the y axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param z1 integer value of mid point along the z axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param x2 integer value of end point along the x axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param y2 integer value of end point along the y axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param z2 integer value of end point along the z axis with lower bound up and upper bound of possible distance set by SDK
+	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
+	 * @param ID string identification number of a particular symbol recognition system pattern
 	 */
 	public void flyCurveMissionPad(int x1, int y1, int z1, int x2, int y2, int z2, int speed, String ID);
 	
 	/***
-	 * 
-	 * @param degrees
+	 * Requests drone to rotate around it's central axis in a clockwise direction by a certain number of degrees relative to an above viewpoint
+	 * @param degrees integer value of amount to rotate in degrees
 	 */
 	public void turnCW(int degrees);
 	
 	/***
-	 * 
-	 * @param degrees
+	 * Requests drone to rotate around it's central axis in a counter clockwise direction by a certain number of degrees relative to an above viewpoint
+	 * @param degrees integer value of amount to rotate in degrees
 	 */
 	public void turnCCW(int degrees);
 	
 	/***
-	 * 
-	 * @param direction
+	 * Requests the drone perform a 360 degree flip in one of the four headings relative to the airframe
+	 * @param direction string dependent on SDK represents forward, backward, left, or right
 	 */
 	public void flip(String direction);
 	
@@ -183,98 +183,100 @@ public interface PhysicalDrone {
 	public void jumpMissionPad(int x, int y, int z, int speed, int yaw, String ID1, String ID2);
 	
 	/***
-	 * 
-	 * @param seconds
+	 * Requests the drone hover at current altitude for a set number of seconds
+	 * depending on the safety features of the drone steps must be taken to prevent emergency landings and
+	 * communication loss
+	 * @param seconds number of seconds to hover in place
 	 * @throws InterruptedException uses timer classes and may be interruptable
 	 */
 	public void hoverInPlace(int seconds) throws InterruptedException;
 	
 	/***
-	 * 
+	 * Requests the drone stope in place, considered a placeholder command when not coupled with a timer
 	 */
 	public void stopInPlace();
 	
 	/***
-	 * 
-	 * @param speed
+	 * Sets drone speed for all motion requests that do not include speed as a variable: Untested
+	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
 	 */
 	public void setSpeed(int speed);
 	
 	/***
-	 * 
-	 * @return
+	 * Gets the drone's current speed setting
+	 * @return double measurement of airspeed based on SDK units
 	 */
 	public double getSpeed();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets the drone's currently remaining battery life as a percentage
+	 * @return integer representation of percentage
 	 */
 	public int getBattery();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets the current amount of time since the drone was issued the first flight command
+	 * @return integer value of time based on SDK units
 	 */
 	public int getFlightTime();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets the current altitude of the drone
+	 * @return integer value of altitude based on SDK units
 	 */
 	public int getHeight();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets the drone's current internal temperature
+	 * @return integer value of internal temp based on SDK units
 	 */
 	public int getTemp();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets dorne's IMU attitude data and returns pitch
+	 * @return integer value of pitch in degrees 
 	 */
 	public int getAttitudePitch();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets dorne's IMU attitude data and returns roll
+	 * @return integer value of roll in degrees
 	 */
 	public int getAttitudeRoll();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets dorne's IMU attitude data and returns yaw
+	 * @return integer value of yaw in degrees
 	 */
 	public int getAttitudeYaw();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets drone's onboard barometric pressure reading at current altitude
+	 * @return double precision value of pressure reading based on SDK units
 	 */
 	public double getBarometer();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets drone's IMU angular acceleration data and returns the X component
+	 * @return double precision acceleration value based on SDK units
 	 */
 	public double getAccelerationX();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets drone's IMU angular acceleration data and returns the Y component
+	 * @return double precision acceleration value based on SDK units
 	 */
 	public double getAccelerationY();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets drone's IMU angular acceleration data and returns the Z component
+	 * @return double precision acceleration value based on SDK units
 	 */
 	public double getAccelerationZ();
 	
 	/***
-	 * 
-	 * @return
+	 * Gets drone's current time of flight distance from initial location
+	 * @return integer value of distance based on SDK units 
 	 */
 	public int getTOF();
 	
