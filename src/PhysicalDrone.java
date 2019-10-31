@@ -6,7 +6,7 @@
  * @author MasterControlProgram
  *
  */
-public interface PhysicalDrone {
+interface PhysicalDrone {
 	
 	/***
 	 * This is a required method for every flight routine 

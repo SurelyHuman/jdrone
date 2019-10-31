@@ -194,14 +194,16 @@ public class TelloJavaToPython {
     		out = new BufferedWriter( new OutputStreamWriter(p.getOutputStream()) );
     		Scanner scan = new Scanner(System.in);
     		
-    		String command = scan.nextLine();
-    		
-    		while(!command.equals("end")) {
-    			commandDrone(command);
-    			command = scan.nextLine();
+    		if (scan.hasNext()) {
+	    		String command = scan.nextLine();
+	    		
+	    		while(!command.equals("end")) {
+	    			commandDrone(command);
+	    			command = scan.nextLine();
+	    		}
+	    		
+	    		commandDrone(command);
     		}
-    		
-    		commandDrone(command);
     		
     		p.destroy();
     		print('\n' + "End Program");
