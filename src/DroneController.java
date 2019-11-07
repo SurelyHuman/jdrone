@@ -19,7 +19,7 @@ public class DroneController {
     	System.out.println(msg);
     	byte[] data = msg.getBytes();
     	String output = "";
-     	DatagramPacket call = new DatagramPacket(data, data.length, destinationAddress,sendToPort);
+     	DatagramPacket call = new DatagramPacket(data, data.length, destinationAddress, sendToPort);
      	DatagramPacket response = new DatagramPacket(new byte[receiveBufferSize], receiveBufferSize);
      	udpSocket.send(call);
      	udpSocket.setSoTimeout(30000);
