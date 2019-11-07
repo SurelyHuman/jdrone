@@ -69,11 +69,8 @@ public class DroneController {
 	}
 
 	private DatagramSocket udpSocket, videoUdpSocket;
-	//private int udpPort; // = 9000;
-	//private int videoPort; // = 11111;
-	private int sendToPort; // = 8889;
+	private int sendToPort;
 	private final int receiveBufferSize = 8192;
-	//private String sendAddress; // = "192.168.10.1";
 	private InetAddress destinationAddress;
 
 }
