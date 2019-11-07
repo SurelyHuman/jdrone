@@ -8,51 +8,51 @@ public class DroneController {
 		
 	}
 	
-	public DroneController(int udpPort, int videoPort, int sendToPort, String sendAddress) throws SocketException, UnknownHostException {
-		udpSocket = new DatagramSocket(udpPort);
-		videoUdpSocket = new DatagramSocket(videoPort);
-		this.sendToPort = sendToPort;
-		destinationAddress = InetAddress.getByName(sendAddress);
+	public DroneController(int hostPort, int videoPort, int dronePort, String droneAddress) throws SocketException, UnknownHostException {
+		hostSocket = new DatagramSocket(hostPort);
+		videoSocket = new DatagramSocket(videoPort);
+		this.dronePort = dronePort;
+		destinationAddress = InetAddress.getByName(droneAddress);
 	}
 	    
     public String sendCommand(String msg) throws IOException{
     	System.out.println(msg);
     	byte[] data = msg.getBytes();
     	String output = "";
-     	DatagramPacket call = new DatagramPacket(data, data.length, destinationAddress, sendToPort);
+     	DatagramPacket call = new DatagramPacket(data, data.length, destinationAddress, dronePort);
      	DatagramPacket response = new DatagramPacket(new byte[receiveBufferSize], receiveBufferSize);
-     	udpSocket.send(call);
-     	udpSocket.setSoTimeout(30000);
+     	hostSocket.send(call);
+     	hostSocket.setSoTimeout(30000);
      	try {
-     		udpSocket.receive(response);
+     		hostSocket.receive(response);
      		output = new String(response.getData(), "UTF-8");
      		System.out.print(output);
      	}		
      	catch (SocketTimeoutException e) {
      		// timeout exception.
             System.out.println("Timeout reached!!! " + e);
-            udpSocket.close();
+            hostSocket.close();
             return "Timeout reached and Socket Closed!!!";
      	}
     	return output;
     }
     
     public void closeSockets() {
-    	udpSocket.close();
-    	videoUdpSocket.close();
+    	hostSocket.close();
+    	videoSocket.close();
     }
     
 	public DatagramSocket getUdpSocket() {
-		return udpSocket;
+		return hostSocket;
 	}
 
 	public DatagramSocket getVideoUdpSocket() {
-		return videoUdpSocket;
+		return videoSocket;
 	}
 
 
 	public int getSendToPort() {
-		return sendToPort;
+		return dronePort;
 	}
 
 	public int getReceiveBufferSize() {
@@ -68,8 +68,8 @@ public class DroneController {
 
 	}
 
-	private DatagramSocket udpSocket, videoUdpSocket;
-	private int sendToPort;
+	private DatagramSocket hostSocket, videoSocket;
+	private int dronePort;
 	private final int receiveBufferSize = 8192;
 	private InetAddress destinationAddress;
 
