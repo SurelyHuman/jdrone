@@ -87,20 +87,6 @@ interface FlightControllable {
 	public void flyCurve(int x1, int y1, int z1, int x2, int y2, int z2, int speed);
 	
 	/***
-	 * Requests drone fly along a curve in three dimensions defined by two points and then search for symbol recognition system pattern with specific ID at location  
-	 * Starts with current location as origin flying through first point and ending at second point
-	 * @param x1 integer value of mid point along the x axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param y1 integer value of mid point along the y axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param z1 integer value of mid point along the z axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param x2 integer value of end point along the x axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param y2 integer value of end point along the y axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param z2 integer value of end point along the z axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
-	 * @param ID string identification number of a particular symbol recognition system pattern
-	 */
-	public void flyCurveMissionPad(int x1, int y1, int z1, int x2, int y2, int z2, int speed, String ID);
-	
-	/***
 	 * Requests drone to rotate around it's central axis in a clockwise direction by a certain number of degrees relative to an above viewpoint
 	 * @param degrees integer value of amount to rotate in degrees
 	 */
