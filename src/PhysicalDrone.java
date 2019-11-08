@@ -1,4 +1,4 @@
 
-public abstract class PhysicalDrone {
+public class PhysicalDrone {
 	DroneController controller;
 }
