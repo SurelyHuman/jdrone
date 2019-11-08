@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class DroneController {
 	
@@ -26,13 +27,12 @@ public class DroneController {
      	try {
      		hostSocket.receive(response);
      		output = new String(response.getData(), "UTF-8");
-     		System.out.print(output);
+     		System.out.println(output);
      	}		
      	catch (SocketTimeoutException e) {
      		// timeout exception.
             System.out.println("Timeout reached!!! " + e);
-            hostSocket.close();
-            return "Timeout reached and Socket Closed!!!";
+            return "Timeout!!!";
      	}
     	return output;
     }
@@ -40,18 +40,19 @@ public class DroneController {
     public void closeSockets() {
     	hostSocket.close();
     	videoSocket.close();
+    	System.out.println("All sockets closed... ");
     }
     
-	public DatagramSocket getUdpSocket() {
+	public DatagramSocket getHostSocket() {
 		return hostSocket;
 	}
 
-	public DatagramSocket getVideoUdpSocket() {
+	public DatagramSocket getVideoSocket() {
 		return videoSocket;
 	}
 
 
-	public int getSendToPort() {
+	public int getDronePort() {
 		return dronePort;
 	}
 
@@ -63,9 +64,27 @@ public class DroneController {
 		return destinationAddress;
 	}
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws IOException {
+		DroneController tester = new DroneController(9000, 11111, 8889, "192.168.10.1");
+		
+		System.out.println("Drone Controller Demo" + "\n");
 
+		System.out.println("Try any string to test" + "\n");
+
+		System.out.println("end -- quit demo" + "\n");
+		
+		Scanner scan = new Scanner(System.in);
+
+    	String command = scan.nextLine();
+    		
+    	while(!command.equals("end") && command != null && !command.trim().isEmpty()) {
+    		tester.sendCommand(command);
+    		command = scan.nextLine();
+    	}
+    		
+		scan.close();
+		tester.closeSockets();
+		System.out.println("Exit Program...");
 	}
 
 	private DatagramSocket hostSocket, videoSocket;

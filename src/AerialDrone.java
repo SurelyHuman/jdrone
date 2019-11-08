@@ -1,11 +1,6 @@
 
 public class AerialDrone extends PhysicalDrone implements FlightControllable {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void takeoff() {
 		// TODO Auto-generated method stub
@@ -178,6 +173,11 @@ public class AerialDrone extends PhysicalDrone implements FlightControllable {
 	public int getTOF() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
