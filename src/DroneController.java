@@ -26,9 +26,9 @@ public class DroneController {
      	hostSocket.setSoTimeout(30000);
      	try {
      		hostSocket.receive(response);
-     		output = new String(response.getData(), "UTF-8");
-     		String cleanOutput = output.replaceAll("\r", "").replaceAll("\n", ""); // attempting to fit response on single line
-     		System.out.println("Incoming response: " + cleanOutput);
+     		output = new String(response.getData(), "UTF-8").replaceAll("\r", "").replaceAll("\n", "");
+     		//output = output.replaceAll("\r", "").replaceAll("\n", ""); // fits response on single line
+     		System.out.println("Incoming response: " + output);
      	}		
      	catch (SocketTimeoutException e) {
      		// timeout exception.

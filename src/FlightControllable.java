@@ -1,205 +1,139 @@
-
+import java.io.IOException;
 
 /***
- * Interface containing a selection of possible drone flight commands mostly independent of drone manufacturer
- * 09/30/2019 v1.0
+ * Interface containing a selection of aircraft flight commands independent of type/manufacturer
+ * 11/08/2019 v1.0
  * @author MasterControlProgram
  *
  */
 interface FlightControllable {
 	
 	/***
-	 * Sends the "takeoff" signal to an active drone
+	 * Sends the "takeoff" signal to an active aircraft
 	 * Trying to fly in low light or high wind may cause errors
 	 * Trying to take off with a low battery may fail
+	 * @throws IOException 
 	 */
-	public void takeoff();
+	public void takeoff() throws IOException;
 	
 	/***
-	 * Sends the "land" signal to an active drone
-	 * Drone may land in place despite any obstacles below it
+	 * Sends the "land" signal to an active aircraft
+	 * Aircraft may land despite any obstacles below it or ahead
 	 * Make sure your landing area is clear
+	 * @throws IOException 
 	 */
-	public void land();
-		
-	/***
-	 * Requests drone increase altitude 
-	 * System of measurement varies by manufacturer 
-	 * @param up integer value starting with SDK lower bound up to upper bound of possible distance travelled
-	 */
-	public void flyUpward(int up);
+	public void land() throws IOException;
 	
 	/***
-	 * Requests drone decrease altitude
-	 * System of measurement varies by manufacturer
-	 * @param down integer value starting with SDK lower bound up to upper bound of possible distance travelled
+	 * 
+	 * @param up
+	 * @throws IOException 
 	 */
-	public void flyDown(int down);
+	public void increaseAltitude(int up) throws IOException;
 	
 	/***
-	 * Requests drone fly in forward heading relative to airframe 
-	 * System of measurement varies by manufacturer
-	 * @param front integer value starting with SDK lower bound up to upper bound of possible distance travelled
+	 * 
+	 * @param down
+	 * @throws IOException 
 	 */
-	public void flyForward(int front);
+	public void decreaseAltitude(int down) throws IOException;
 	
 	/***
-	 * Requests drone fly in reverse heading relative to airframe 
-	 * System of measurement varies by manufacturer
-	 * @param back integer value starting with SDK lower bound up to upper bound of possible distance travelled
+	 * 
+	 * @param front
+	 * @throws IOException 
 	 */
-	public void flyBackward(int back);
+	public void flyForward(int front) throws IOException;
 	
 	/***
-	 * Requests drone fly left heading relative to airframe
-	 * System of measurement varies by manufacturer
-	 * @param left integer value starting with SDK lower bound up to upper bound of possible distance travelled
+	 * 
+	 * @param left
+	 * @throws IOException 
 	 */
-	public void flyLeft(int left);
+	public void flyLeft(int left) throws IOException;
 	
 	/***
-	 * Requests drone fly right heading relative to airframe
-	 * System of measurement varies by manufacturer
-	 * @param right integer value starting with SDK lower bound up to upper bound of possible distance travelled
+	 * 
+	 * @param right
+	 * @throws IOException 
 	 */
-	public void flyRight(int right);
+	public void flyRight(int right) throws IOException;
 	
 	/***
-	 * Requests drone fly to point in three dimensions relative to current position as origin 
-	 * @param x integer value of point along the x axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param y integer value of point along the y axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param z integer value of point along the z axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
+	 * 
+	 * @param degrees
+	 * @throws IOException 
 	 */
-	public void gotoXYZ(int x, int y, int z, int speed);
+	public void turnCW(int degrees) throws IOException;
 	
 	/***
-	 * Requests drone fly along a curve in three dimensions defined by two points 
-	 * Starts with current location as origin flying through first point and ending at second point
-	 * @param x1 integer value of mid point along the x axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param y1 integer value of mid point along the y axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param z1 integer value of mid point along the z axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param x2 integer value of end point along the x axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param y2 integer value of end point along the y axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param z2 integer value of end point along the z axis with lower bound up and upper bound of possible distance set by SDK
-	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
+	 * 
+	 * @param degrees
+	 * @throws IOException 
 	 */
-	public void flyCurve(int x1, int y1, int z1, int x2, int y2, int z2, int speed);
+	public void turnCCW(int degrees) throws IOException;
 	
 	/***
-	 * Requests drone to rotate around it's central axis in a clockwise direction by a certain number of degrees relative to an above viewpoint
-	 * @param degrees integer value of amount to rotate in degrees
+	 * 
+	 * @return
+	 * @throws IOException 
 	 */
-	public void turnCW(int degrees);
+	public int getFlightTime() throws IOException;
 	
 	/***
-	 * Requests drone to rotate around it's central axis in a counter clockwise direction by a certain number of degrees relative to an above viewpoint
-	 * @param degrees integer value of amount to rotate in degrees
+	 * 
+	 * @return
+	 * @throws IOException 
 	 */
-	public void turnCCW(int degrees);
+	public int getHeight() throws IOException;
 	
 	/***
-	 * Requests the drone perform a 360 degree flip in one of the four headings relative to the airframe
-	 * @param direction string dependent on SDK represents forward, backward, left, or right
+	 * 
+	 * @return
+	 * @throws IOException 
 	 */
-	public void flip(String direction);
+	public int getAttitudePitch() throws IOException;
 	
 	/***
-	 * Requests the drone hover at current altitude for a set number of seconds
-	 * depending on the safety features of the drone steps must be taken to prevent emergency landings and
-	 * communication loss
-	 * @param seconds number of seconds to hover in place
-	 * @throws InterruptedException uses timer classes and may be interruptable
+	 * 
+	 * @return
+	 * @throws IOException 
 	 */
-	public void hoverInPlace(int seconds) throws InterruptedException;
+	public int getAttitudeRoll() throws IOException;
 	
 	/***
-	 * Requests the drone stope in place, considered a placeholder command when not coupled with a timer
+	 * 
+	 * @return
+	 * @throws IOException 
 	 */
-	public void stopInPlace();
+	public int getAttitudeYaw() throws IOException;
 	
 	/***
-	 * Sets drone speed for all motion requests that do not include speed as a variable: Untested
-	 * @param speed integer value setting some distance travelled per some unit time determined by SDK
-	 */
-	public void setSpeed(int speed);
-	
-	/***
-	 * Gets the drone's current speed setting
-	 * @return double measurement of airspeed based on SDK units
-	 */
-	public double getSpeed();
-	
-	/***
-	 * Gets the drone's currently remaining battery life as a percentage
-	 * @return integer representation of percentage
-	 */
-	public int getBattery();
-	
-	/***
-	 * Gets the current amount of time since the drone was issued the first flight command
-	 * @return integer value of time based on SDK units
-	 */
-	public int getFlightTime();
-	
-	/***
-	 * Gets the current altitude of the drone
-	 * @return integer value of altitude based on SDK units
-	 */
-	public int getHeight();
-	
-	/***
-	 * Gets the drone's current internal temperature
-	 * @return integer value of internal temp based on SDK units
-	 */
-	public int getTemp();
-	
-	/***
-	 * Gets dorne's IMU attitude data and returns pitch
-	 * @return integer value of pitch in degrees 
-	 */
-	public int getAttitudePitch();
-	
-	/***
-	 * Gets dorne's IMU attitude data and returns roll
-	 * @return integer value of roll in degrees
-	 */
-	public int getAttitudeRoll();
-	
-	/***
-	 * Gets dorne's IMU attitude data and returns yaw
-	 * @return integer value of yaw in degrees
-	 */
-	public int getAttitudeYaw();
-	
-	/***
-	 * Gets drone's onboard barometric pressure reading at current altitude
-	 * @return double precision value of pressure reading based on SDK units
-	 */
-	public double getBarometer();
-	
-	/***
-	 * Gets drone's IMU angular acceleration data and returns the X component
+	 * Gets aircraft's IMU angular acceleration data and returns the X component
 	 * @return double precision acceleration value based on SDK units
+	 * @throws IOException 
 	 */
-	public double getAccelerationX();
+	public double getAccelerationX() throws IOException;
 	
 	/***
-	 * Gets drone's IMU angular acceleration data and returns the Y component
+	 * Gets aircraft's IMU angular acceleration data and returns the Y component
 	 * @return double precision acceleration value based on SDK units
+	 * @throws IOException 
 	 */
-	public double getAccelerationY();
+	public double getAccelerationY() throws IOException;
 	
 	/***
-	 * Gets drone's IMU angular acceleration data and returns the Z component
+	 * Gets aircraft's IMU angular acceleration data and returns the Z component
 	 * @return double precision acceleration value based on SDK units
+	 * @throws IOException 
 	 */
-	public double getAccelerationZ();
+	public double getAccelerationZ() throws IOException;
 	
 	/***
-	 * Gets drone's current time of flight distance from initial location
-	 * @return integer value of distance based on SDK units 
+	 * 
+	 * @return
+	 * @throws IOException
 	 */
-	public int getTOF();
+	public int getTOF() throws IOException;
 		
 }
