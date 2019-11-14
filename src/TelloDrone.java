@@ -7,6 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TelloDrone extends MultiRotorDrone {
 	
+	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
+	private final int maxDist = maxGoto;
+	
 	/***
 	 * 
 	 * @throws SocketException
@@ -77,80 +80,80 @@ public class TelloDrone extends MultiRotorDrone {
 
 	@Override
 	public void increaseAltitude(int up) throws IOException {
-		if (up <= distMin) this.controller.sendCommand("up " + distMin);
-		else if (up > gotoMax) {
-			this.controller.sendCommand("up " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - up));
+		if (up <= minDist) this.controller.sendCommand("up " + minDist);
+		else if (up > maxDist) {
+			this.controller.sendCommand("up " + maxDist);
+			increaseAltitude(Math.abs(maxDist - up));
 		}
 		else this.controller.sendCommand("up " + up);
 	}
 
 	@Override
 	public void decreaseAltitude(int down) throws IOException {
-		if (down <= distMin) this.controller.sendCommand("down " + distMin);
-		else if (down > gotoMax) {
-			this.controller.sendCommand("down " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - down));
+		if (down <= minDist) this.controller.sendCommand("down " + minDist);
+		else if (down > maxDist) {
+			this.controller.sendCommand("down " + maxDist);
+			increaseAltitude(Math.abs(maxDist - down));
 		}
 		else this.controller.sendCommand("up " + down);
 	}
 
 	@Override
 	public void flyForward(int front) throws IOException {
-		if (front <= distMin) this.controller.sendCommand("forward " + distMin);
-		else if (front > gotoMax) {
-			this.controller.sendCommand("forward " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - front));
+		if (front <= minDist) this.controller.sendCommand("forward " + minDist);
+		else if (front > maxDist) {
+			this.controller.sendCommand("forward " + maxDist);
+			increaseAltitude(Math.abs(maxDist - front));
 		}
 		else this.controller.sendCommand("forward " + front);
 	}
 	
 	@Override
 	public void flyBackward(int back) throws IOException {
-		if (back <= distMin) this.controller.sendCommand("back " + distMin);
-		else if (back > gotoMax) {
-			this.controller.sendCommand("back " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - back));
+		if (back <= minDist) this.controller.sendCommand("back " + minDist);
+		else if (back > maxDist) {
+			this.controller.sendCommand("back " + maxDist);
+			increaseAltitude(Math.abs(maxDist - back));
 		}
 		else this.controller.sendCommand("back " + back);
 	}
 
 	@Override
 	public void flyLeft(int left) throws IOException {
-		if (left <= distMin) this.controller.sendCommand("left " + distMin);
-		else if (left > gotoMax) {
-			this.controller.sendCommand("left " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - left));
+		if (left <= minDist) this.controller.sendCommand("left " + minDist);
+		else if (left > maxDist) {
+			this.controller.sendCommand("left " + maxDist);
+			increaseAltitude(Math.abs(maxDist - left));
 		}
 		else this.controller.sendCommand("left " + left);
 	}
 
 	@Override
 	public void flyRight(int right) throws IOException {
-		if (right <= distMin) this.controller.sendCommand("right " + distMin);
-		else if (right > gotoMax) {
-			this.controller.sendCommand("right " + gotoMax);
-			increaseAltitude(Math.abs(gotoMax - right));
+		if (right <= minDist) this.controller.sendCommand("right " + minDist);
+		else if (right > maxDist) {
+			this.controller.sendCommand("right " + maxDist);
+			increaseAltitude(Math.abs(maxDist - right));
 		}
 		else this.controller.sendCommand("right " + right);
 	}
 
 	@Override
 	public void turnCW(int degrees) throws IOException {
-		if (degrees <= degreesMin) this.controller.sendCommand("cw " + degreesMin);
-		else if (degrees > degreesMax) {
-			this.controller.sendCommand("cw " + degreesMax);
-			turnCW(Math.abs(degreesMax - degrees));
+		if (degrees <= minDegrees) this.controller.sendCommand("cw " + minDegrees);
+		else if (degrees > maxDegrees) {
+			this.controller.sendCommand("cw " + maxDegrees);
+			turnCW(Math.abs(maxDegrees - degrees));
 		}
 		else this.controller.sendCommand("cw " + degrees);
 	}
 
 	@Override
 	public void turnCCW(int degrees) throws IOException {
-		if (degrees <= degreesMin) this.controller.sendCommand("ccw " + degreesMin);
-		else if (degrees > degreesMax) {
-			this.controller.sendCommand("ccw " + degreesMax);
-			turnCCW(Math.abs(degreesMax - degrees));
+		if (degrees <= minDegrees) this.controller.sendCommand("ccw " + minDegrees);
+		else if (degrees > maxDegrees) {
+			this.controller.sendCommand("ccw " + maxDegrees);
+			turnCCW(Math.abs(maxDegrees - degrees));
 		}
 		else this.controller.sendCommand("ccw " + degrees);
 	}
@@ -172,9 +175,39 @@ public class TelloDrone extends MultiRotorDrone {
 	 * @param x
 	 * @param y
 	 * @param speed
+	 * @throws IOException 
 	 */
-	public void gotoXYZ(int x, int y, int speed) {
-		// int z = 0;
+	public void gotoXY(int x, int y, int speed) throws IOException {
+		int z = 0;
+		y = -y;
+		double slope = y/x;
+		if (speed > maxSpeed) speed = maxSpeed;
+		else if (speed < minSpeed) speed = minSpeed;
+		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, y, z, speed)); //this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, y, z, speed));
+		else if (x > maxGoto && y <= maxGoto && y >= minGoto) {
+			int partialY = (int) Math.round(slope * maxGoto);
+			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, partialY, z, speed));
+			gotoXY(x - maxGoto, y - partialY, speed);
+		}
+		else if (x < minGoto && y <= maxGoto && y >= minGoto) {
+			int partialY = (int) Math.round(slope * minGoto);
+			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialY, z, speed));
+			gotoXY(x - minGoto, y - partialY, speed);
+		}
+		else if (y > maxGoto && x <= maxGoto && x >= minGoto) {
+			int partialX = (int) Math.round(maxGoto/slope);
+			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, partialX, z, speed));
+			gotoXY(y - maxGoto, x - partialX, speed);
+		}
+		else if (y < minGoto && x <= maxGoto && x >= minGoto) {
+			int partialX = (int) Math.round(minGoto/slope);
+			System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialX, z, speed));
+			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialX, z, speed));
+			gotoXY(y - minGoto, x - partialX, speed);
+		}
+		else if ((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) {
+			
+		}
 	}
 	
 	/***
@@ -299,9 +332,9 @@ public class TelloDrone extends MultiRotorDrone {
 	
 	@Override
 	public void setSpeed(int speed) throws IOException {
-		if (speed <= speedMin) this.controller.sendCommand("speed " + speedMin);
-		else if (speed > speedMax) {
-			this.controller.sendCommand("speed " + speedMax);
+		if (speed <= minSpeed) this.controller.sendCommand("speed " + minSpeed);
+		else if (speed > maxSpeed) {
+			this.controller.sendCommand("speed " + maxSpeed);
 		}
 		else this.controller.sendCommand("speed " + speed);
 	}
@@ -450,7 +483,5 @@ public class TelloDrone extends MultiRotorDrone {
 		tello.controller.closeSockets();
 		System.out.println("Exit Program...");
 	}
-	
-	private final int gotoMax = 500, gotoMin = -500, distMin = 20, speedMax = 100, speedMin = 10, degreesMax = 360, degreesMin = 1;
 	
 }
