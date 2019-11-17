@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
@@ -31,8 +30,7 @@ public class DroneController {
 		hostSocket.setSoTimeout(30000);
 		try {
 			hostSocket.receive(response);
-			output = new String(response.getData(), "UTF-8").replaceAll("\r", "").replaceAll("\n", "");
-			//output = output.replaceAll("\r", "").replaceAll("\n", ""); // fits response on single line
+			output = new String(response.getData(), "UTF-8").trim();
 			System.out.println("Incoming response: " + output);
 		}		
 		catch (SocketTimeoutException e) {

@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -25,6 +24,11 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void activateSDK() throws IOException {
 		this.controller.sendCommand("command");
+	}
+	
+	public void end() {
+		this.controller.closeSockets();
+		System.out.println("Exit Program...");
 	}
 	
 	@Override
@@ -284,11 +288,14 @@ public class TelloDrone extends MultiRotorDrone {
 	public void jumpMissionPad(int x, int y, int z, int speed, int yaw, String ID1, String ID2) {
 		// TODO Implement in future release
 	}
-
+	
+	/***
+	 * using getBattery() to reset watchdog failsafe
+	 */
 	@Override
 	public void hoverInPlace(int seconds) throws InterruptedException, IOException {
 		if (seconds > 15) {
-			stopInPlace();
+			getBattery();
 			try {
 				TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
 			} catch (InterruptedException e) {
@@ -297,17 +304,19 @@ public class TelloDrone extends MultiRotorDrone {
 			hoverInPlace(Math.abs(seconds - 15));
 		}
 		else if (seconds == 15) {
-			stopInPlace();
+			getBattery();
 			try {
 				TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
+				return;
 			} catch (InterruptedException e) {
 				return;
 			}
 		}
 		else {
-			stopInPlace();
+			getBattery();
 			try {
 				TimeUnit.SECONDS.sleep(seconds);
+				return;
 			} catch (InterruptedException e) {
 				return;
 			}
@@ -315,7 +324,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 	
 	/***
-	 * 
+	 * Actual interrupt will determine usefulness in future release
 	 * @throws IOException
 	 */
 	public void stopInPlace() throws IOException {
@@ -472,13 +481,13 @@ public class TelloDrone extends MultiRotorDrone {
 		
 		Scanner scan = new Scanner(System.in);
 
-    	String command = scan.nextLine();
-    		
-    	while(!command.equals("end") && command != null && !command.trim().isEmpty()) {
-    		tello.controller.sendCommand(command);
-    		command = scan.nextLine();
-    	}
-    		
+		String command = scan.nextLine();
+
+		while(!command.equals("end") && command != null && !command.trim().isEmpty()) {
+			tello.controller.sendCommand(command);
+			command = scan.nextLine();
+		}
+
 		scan.close();
 		tello.controller.closeSockets();
 		System.out.println("Exit Program...");
