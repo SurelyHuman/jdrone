@@ -4,23 +4,24 @@ public class TelloTester {
 	
 	public static void testGetters() throws IOException {
 		TelloDrone tello = new TelloDrone();
-		tello.activateSDK();
-		System.out.println(tello.getBattery());
-		System.out.println(tello.getHeight());
-		System.out.println(tello.getSpeed());
-		System.out.println(tello.getTemp());
-		System.out.println(tello.getBarometer());
-		System.out.println(tello.getAttitudePitch());
-		System.out.println(tello.getAttitudeRoll());
-		System.out.println(tello.getAttitudeYaw());
-		System.out.println(tello.getAccelerationX());
-		System.out.println(tello.getAccelerationY());
-		System.out.println(tello.getAccelerationZ());
-		System.out.println(tello.getTOF());
-		System.out.println(tello.getFlightTime());
-		System.out.println(tello.getWIFI());
-		System.out.println(tello.getVersionSDK());
-		System.out.println(tello.getSerialNumber());
+		tello.gotoXY(1125, 1080, 150);
+//		tello.activateSDK();
+//		System.out.println(tello.getBattery());
+//		System.out.println(tello.getHeight());
+//		System.out.println(tello.getSpeed());
+//		System.out.println(tello.getTemp());
+//		System.out.println(tello.getBarometer());
+//		System.out.println(tello.getAttitudePitch());
+//		System.out.println(tello.getAttitudeRoll());
+//		System.out.println(tello.getAttitudeYaw());
+//		System.out.println(tello.getAccelerationX());
+//		System.out.println(tello.getAccelerationY());
+//		System.out.println(tello.getAccelerationZ());
+//		System.out.println(tello.getTOF());
+//		System.out.println(tello.getFlightTime());
+//		System.out.println(tello.getWIFI());
+//		System.out.println(tello.getVersionSDK());
+//		System.out.println(tello.getSerialNumber());
 		tello.end();
 	}
 	
@@ -28,11 +29,12 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.takeoff();
-		tello.flyForward(600);
+		tello.flyForward(850);
 		tello.hoverInPlace(20);
-		tello.turnCCW(720);
+		tello.turnCCW(360);
 		tello.flip("b");
-		tello.flyBackward(200);
+		tello.flip("f");
+		tello.flyBackward(850);
 		tello.land();
 		tello.end();
 	}
