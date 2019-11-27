@@ -4,7 +4,8 @@ public class TelloTester {
 	
 	public static void testGetters() throws IOException {
 		TelloDrone tello = new TelloDrone();
-		tello.gotoXY(1125, 1080, 150);
+		tello.gotoXY(1125, 700, 150);
+//		tello.gotoXYZ(1125, 700, 900, 150);
 //		tello.activateSDK();
 //		System.out.println(tello.getBattery());
 //		System.out.println(tello.getHeight());
@@ -29,19 +30,20 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.takeoff();
+		//tello.decreaseAltitude(500);
 		tello.flyForward(850);
 		tello.hoverInPlace(20);
-		tello.turnCCW(360);
+		tello.turnCCW(180);
 		tello.flip("b");
 		tello.flip("f");
-		tello.flyBackward(850);
+		tello.flyForward(850);
 		tello.land();
 		tello.end();
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		//testGetters();
-		testFlight();
+		testGetters();
+		//testFlight();
 	}
 
 }
