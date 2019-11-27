@@ -440,30 +440,18 @@ public class TelloDrone extends MultiRotorDrone {
 	public void hoverInPlace(int seconds) throws InterruptedException, IOException {
 		if (seconds > 15) {
 			getBattery();
-			//try {
-				TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
-			//} catch (InterruptedException e) {
-			//	return;
-			//}
+			TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
 			hoverInPlace(Math.abs(seconds - 15));
 		}
 		else if (seconds == 15) {
 			getBattery();
-			//try {
-				TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
-				return;
-			//} catch (InterruptedException e) {
-			//	return;
-			//}
+			TimeUnit.MILLISECONDS.sleep(14970); // less than exactly 15 sec to prevent failsafe landing
+			return;
 		}
 		else {
 			getBattery();
-			//try {
-				TimeUnit.SECONDS.sleep(seconds);
-				return;
-			//} catch (InterruptedException e) {
-			//	return;
-			//}
+			TimeUnit.SECONDS.sleep(seconds);
+			return;
 		}
 	}
 	
