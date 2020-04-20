@@ -302,7 +302,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 	
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @param x
 	 * @param y
 	 * @param z
@@ -315,7 +315,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 	
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @param x
 	 * @param y
 	 * @param speed
@@ -371,7 +371,7 @@ public class TelloDrone extends MultiRotorDrone {
 			}
 			else {
 				System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, ID));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, ID));
+				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, IDcomm));
 				gotoMissionPadXY(x + maxGoto, y + maxGoto, speed, ID);
 			}
 		}
@@ -397,7 +397,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 	
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @param x1
 	 * @param y1
 	 * @param z1
@@ -413,7 +413,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @param x
 	 * @param y
 	 * @param z
@@ -493,13 +493,23 @@ public class TelloDrone extends MultiRotorDrone {
 		this.controller.sendCommand("ap " + SSID + " " + password);
 	}
 	
-	public double getSpeed() throws NumberFormatException, IOException {
-		return Double.parseDouble(this.controller.sendCommand("speed?"));
+	public double getSpeed() throws IOException {
+		try {
+			return Double.parseDouble(this.controller.sendCommand("speed?"));
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
-	public int getBattery() throws NumberFormatException, IOException {
-		return Integer.parseInt(this.controller.sendCommand("battery?"));
+	public int getBattery() throws IOException {
+		try {
+			return Integer.parseInt(this.controller.sendCommand("battery?"));
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 	
 	/***
@@ -508,81 +518,135 @@ public class TelloDrone extends MultiRotorDrone {
 	 * @throws IOException
 	 */
 	public int getTemp() throws IOException {
-		String temperature = this.controller.sendCommand("temp?");
-		String[] arrayOfStr = temperature.split("~|C", 2);
-		int temp1 = Integer.parseInt(arrayOfStr[0]);
-		int temp2 = Integer.parseInt(arrayOfStr[1].substring(0, arrayOfStr[1].length() - 1));
-		return (temp1 + temp2)/2;
+		try {
+			String temperature = this.controller.sendCommand("temp?");
+			String[] arrayOfStr = temperature.split("~|C", 2);
+			int temp1 = Integer.parseInt(arrayOfStr[0]);
+			int temp2 = Integer.parseInt(arrayOfStr[1].substring(0, arrayOfStr[1].length() - 1));
+			return (temp1 + temp2)/2;
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 	
 	/***
 	 * 
 	 * @return
-	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	public double getBarometer() throws NumberFormatException, IOException {
-		return Double.parseDouble(this.controller.sendCommand("baro?"));
+	public double getBarometer() throws IOException {
+		try {
+			return Double.parseDouble(this.controller.sendCommand("baro?"));
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 	
 	@Override
 	public int getFlightTime() throws IOException {
-		String time = this.controller.sendCommand("time?");
-		return Integer.parseInt(time.substring(0, time.length() - 1));
+		try {
+			String time = this.controller.sendCommand("time?");
+			return Integer.parseInt(time.substring(0, time.length() - 1));
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public int getHeight() throws IOException {
-		String height = this.controller.sendCommand("height?");
-		return 10 * Integer.parseInt(height.substring(0, height.length() - 2));
+		try {
+			String height = this.controller.sendCommand("height?");
+			return 10 * Integer.parseInt(height.substring(0, height.length() - 2));
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public int getAttitudePitch() throws IOException {
-		String attitude = this.controller.sendCommand("attitude?");
-		String[] arrayOfStr = attitude.split(":|;", 7);
-		return Integer.parseInt(arrayOfStr[1]);
+		try {
+			String attitude = this.controller.sendCommand("attitude?");
+			String[] arrayOfStr = attitude.split(":|;", 7);
+			return Integer.parseInt(arrayOfStr[1]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public int getAttitudeRoll() throws IOException {
-		String attitude = this.controller.sendCommand("attitude?");
-		String[] arrayOfStr = attitude.split(":|;", 7);
-		return Integer.parseInt(arrayOfStr[3]);
+		try {
+			String attitude = this.controller.sendCommand("attitude?");
+			String[] arrayOfStr = attitude.split(":|;", 7);
+			return Integer.parseInt(arrayOfStr[3]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public int getAttitudeYaw() throws IOException {
-		String attitude = this.controller.sendCommand("attitude?");
-		String[] arrayOfStr = attitude.split(":|;", 7);
-		return Integer.parseInt(arrayOfStr[5]);
+		try {
+			String attitude = this.controller.sendCommand("attitude?");
+			String[] arrayOfStr = attitude.split(":|;", 7);
+			return Integer.parseInt(arrayOfStr[5]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public double getAccelerationX() throws IOException {
-		String acceleration = this.controller.sendCommand("acceleration?");
-		String[] arrayOfStr = acceleration.split(":|;", 7);
-		return Double.parseDouble(arrayOfStr[1]);
+		try {
+			String acceleration = this.controller.sendCommand("acceleration?");
+			String[] arrayOfStr = acceleration.split(":|;", 7);
+			return Double.parseDouble(arrayOfStr[1]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 	
 	@Override
 	public double getAccelerationY() throws IOException {
-		String acceleration = this.controller.sendCommand("acceleration?");
-		String[] arrayOfStr = acceleration.split(":|;", 7);
-		return Double.parseDouble(arrayOfStr[3]);
+		try {
+			String acceleration = this.controller.sendCommand("acceleration?");
+			String[] arrayOfStr = acceleration.split(":|;", 7);
+			return Double.parseDouble(arrayOfStr[3]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public double getAccelerationZ() throws IOException {
-		String acceleration = this.controller.sendCommand("acceleration?");
-		String[] arrayOfStr = acceleration.split(":|;", 7);
-		return Double.parseDouble(arrayOfStr[5]);
+		try {
+			String acceleration = this.controller.sendCommand("acceleration?");
+			String[] arrayOfStr = acceleration.split(":|;", 7);
+			return Double.parseDouble(arrayOfStr[5]);
+		} catch (Exception e) {
+			System.out.println("Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 
 	@Override
 	public int getTOF() throws IOException {
-		String timeOfFlight = this.controller.sendCommand("height?");
-		return Integer.parseInt(timeOfFlight.substring(0, timeOfFlight.length() - 2));
+		try {
+			String timeOfFlight = this.controller.sendCommand("tof?");
+			return (Integer.parseInt(timeOfFlight.substring(0, timeOfFlight.length() - 2)))/10;
+		} catch (NumberFormatException e) {
+			System.out.println("Number Format Exception due to timeout! " + e);
+			return 0;
+		}
 	}
 	
 	/***
@@ -595,7 +659,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @return
 	 * @throws IOException
 	 */
@@ -604,7 +668,7 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 
 	/***
-	 * 
+	 * SDK 2.0 only
 	 * @return
 	 * @throws IOException
 	 */
