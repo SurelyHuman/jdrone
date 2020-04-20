@@ -4,7 +4,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class TelloDrone extends MultiRotorDrone { //test commit
+public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
