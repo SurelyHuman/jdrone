@@ -1,3 +1,4 @@
+package biochip.personality.drone;
 import java.io.IOException;
 
 public abstract class MultiRotorDrone extends PhysicalDrone implements FlightControllable {
