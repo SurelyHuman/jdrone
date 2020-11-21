@@ -2,7 +2,7 @@
 
 
 /***
- * Convenience class for storing constants needed for unit conversion, and flight
+ * Convenience class for storing constants needed for unit conversion and flight
  * 09/30/2019 v1.0
  * @author MasterControlProgram: Seth Lewis
  *
