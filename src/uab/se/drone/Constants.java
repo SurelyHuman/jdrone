@@ -21,4 +21,7 @@ public class Constants {
 	public static final int PIXELS_TO_ONE_MODEL_FOOT = 25; // on screen pixels to one real world foot
 	public static final int CENTIMETERS_PER_MODEL_FOOT = 30; // centimeters to feet conversion for flight commands
 	
+	public static final int VIDEO_WIDTH = 960;
+    public static final int VIDEO_HEIGHT = 720;
+	
 }
