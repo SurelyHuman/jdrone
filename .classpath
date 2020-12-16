@@ -2,7 +2,5 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="jcodec/jcodec-0.2.5.jar"/>
-	<classpathentry kind="lib" path="jcodec/jcodec-javase-0.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
