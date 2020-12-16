@@ -8,7 +8,7 @@ public abstract class VideoServer extends Thread{
     private int videoPort;
     
     public VideoServer(int videoPort, int length) {
-        this.setVideoPort(videoPort);
+        this.videoPort = videoPort;
         this.buf = new byte[length];
     }
     
@@ -41,6 +41,7 @@ public abstract class VideoServer extends Thread{
 		return videoPort;
 	}
 
+	@SuppressWarnings("unused")
 	private void setVideoPort(int videoPort) {
 		this.videoPort = videoPort;
 	}
