@@ -8,7 +8,8 @@ public abstract class VideoServer extends Thread{
     private byte[] buf = new byte[2048];
     private int videoPort;
     
-    public VideoServer(int videoPort, int length) {
+    public VideoServer(int videoPort, int length) throws SocketException {
+    	this.videoSocket = new DatagramSocket(videoPort);
         this.videoPort = videoPort;
         this.buf = new byte[length];
     }
@@ -20,10 +21,10 @@ public abstract class VideoServer extends Thread{
             try {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 videoSocket.receive(packet);
-
-                InetAddress address = packet.getAddress();
-                int port = packet.getPort();
-                packet = new DatagramPacket(buf, buf.length, address, port);
+                System.out.println(packet.getData());
+                //InetAddress address = packet.getAddress();
+                //int port = packet.getPort();
+                //packet = new DatagramPacket(buf, buf.length, droneAddress, videoPort);
                 this.handle(packet.getData());
             } catch (IOException e) {
                 e.printStackTrace();

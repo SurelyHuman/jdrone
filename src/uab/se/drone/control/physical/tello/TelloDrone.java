@@ -55,6 +55,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void streamOn() throws IOException {
 		this.controller.sendCommand("streamon");
+		flightCamera.start();
 	}
 	
 	/***

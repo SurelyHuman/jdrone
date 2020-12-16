@@ -5,12 +5,13 @@ import org.jcodec.common.model.Picture;
 
 import uab.se.drone.connection.VideoServer;
 
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 
 public class TelloCameraServer extends VideoServer{
 	private H264Decoder decoder;
 
-	public TelloCameraServer(int videoPort, int length) {
+	public TelloCameraServer(int videoPort, int length) throws SocketException {
 		super(videoPort, length);
 		this.decoder = new H264Decoder();
 	}
