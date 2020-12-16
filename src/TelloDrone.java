@@ -9,6 +9,7 @@ public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
+	TelloCameraServer flightCamera;
 	
 	/***
 	 * 
@@ -16,7 +17,8 @@ public class TelloDrone extends MultiRotorDrone {
 	 * @throws UnknownHostException
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException {
-		this.controller = new DroneController(9000, 11111, 8889, "192.168.10.1");
+		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
+		flightCamera = new TelloCameraServer(11111, 2048);
 	}
 	
 	/***
@@ -28,7 +30,8 @@ public class TelloDrone extends MultiRotorDrone {
 	}
 	
 	public void end() {
-		this.controller.closeSockets();
+		this.controller.closeControlSocket();
+		flightCamera.close();
 		System.out.println("Exit Program...");
 	}
 	
@@ -699,7 +702,8 @@ public class TelloDrone extends MultiRotorDrone {
 		}
 
 		scan.close();
-		tello.controller.closeSockets();
+		tello.end();
+		//tello.controller.closeControlSocket();
 		System.out.println("Exit Program...");
 	}
 	

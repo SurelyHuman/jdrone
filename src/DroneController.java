@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class DroneController {
 
-	private DatagramSocket hostSocket, videoSocket;
+	private DatagramSocket hostSocket; //, videoSocket;
 	private int dronePort;
 	private final int receiveBufferSize = 8192;
 	private InetAddress droneAddress;
@@ -14,9 +14,9 @@ public class DroneController {
 
 	}
 
-	public DroneController(int hostPort, int videoPort, int dronePort, String destinationAddress) throws SocketException, UnknownHostException {
+	public DroneController(int hostPort, /*int videoPort,*/ int dronePort, String destinationAddress) throws SocketException, UnknownHostException {
 		hostSocket = new DatagramSocket(hostPort);
-		videoSocket = new DatagramSocket(videoPort);
+		//videoSocket = new DatagramSocket(videoPort);
 		this.dronePort = dronePort;
 		droneAddress = InetAddress.getByName(destinationAddress);
 	}
@@ -28,7 +28,7 @@ public class DroneController {
 		DatagramPacket call = new DatagramPacket(data, data.length, droneAddress, dronePort);
 		DatagramPacket response = new DatagramPacket(new byte[receiveBufferSize], receiveBufferSize);
 		hostSocket.send(call);
-		hostSocket.setSoTimeout(30000);
+		hostSocket.setSoTimeout(20000);
 		try {
 			hostSocket.receive(response);
 			output = new String(response.getData(), "UTF-8").trim();
@@ -42,9 +42,9 @@ public class DroneController {
 		return output;
 	}
 
-	public void closeSockets() {
+	public void closeControlSocket() {
 		hostSocket.close();
-		videoSocket.close();
+		//videoSocket.close();
 		System.out.println("All sockets closed... ");
 	}
 
@@ -52,9 +52,9 @@ public class DroneController {
 		return hostSocket;
 	}
 
-	public DatagramSocket getVideoSocket() {
+	/*public DatagramSocket getVideoSocket() {
 		return videoSocket;
-	}
+	}*/
 
 
 	public int getDronePort() {
@@ -70,7 +70,7 @@ public class DroneController {
 	}
 
 	public static void main(String[] args) throws IOException {
-		DroneController tester = new DroneController(9000, 11111, 8889, "192.168.10.1");
+		DroneController tester = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
 
 		System.out.println("Drone Controller Demo" + "\n");
 		System.out.println("Try any string to test" + "\n");
@@ -86,7 +86,7 @@ public class DroneController {
 		}
 
 		scan.close();
-		tester.closeSockets();
+		tester.closeControlSocket();
 		System.out.println("Exit Program...");
 	}
 
