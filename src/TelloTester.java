@@ -3,9 +3,10 @@ import java.io.IOException;
 
 public class TelloTester {
 	
-	public static void testGetters() throws IOException {
+	public static void testGetters() throws IOException, InterruptedException {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
+		tello.streamOn();
 		System.out.println(tello.getBattery());
 		System.out.println(tello.getHeight());
 		System.out.println(tello.getSpeed());
@@ -22,6 +23,8 @@ public class TelloTester {
 		System.out.println(tello.getWIFI());
 		System.out.println(tello.getVersionSDK());
 		System.out.println(tello.getSerialNumber());
+		tello.hoverInPlace(30);
+		tello.streamOff();
 		tello.end();
 	}
 	
