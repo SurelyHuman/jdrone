@@ -1,10 +1,12 @@
-package uab.se.drone;
+package uab.se.drone.control.physical;
 
 import java.io.IOException;
 
+import uab.se.drone.connection.DroneController;
+
 public abstract class PhysicalDrone {
 	
-	DroneController controller;
+	protected DroneController controller;
 	
 	/***
 	 * 

@@ -1,10 +1,13 @@
-package uab.se.drone;
+package uab.se.drone.control.physical.tello;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import uab.se.drone.connection.DroneController;
+import uab.se.drone.control.physical.MultiRotorDrone;
 
 public class TelloDrone extends MultiRotorDrone {
 	

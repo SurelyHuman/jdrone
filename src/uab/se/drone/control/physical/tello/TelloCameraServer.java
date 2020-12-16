@@ -1,7 +1,10 @@
-package uab.se.drone;
+package uab.se.drone.control.physical.tello;
 import org.jcodec.codecs.h264.H264Decoder;
 import org.jcodec.common.model.ColorSpace;
 import org.jcodec.common.model.Picture;
+
+import uab.se.drone.connection.VideoServer;
+
 import java.nio.ByteBuffer;
 
 public class TelloCameraServer extends VideoServer{

@@ -1,4 +1,4 @@
-package uab.se.drone;
+package uab.se.drone.control.physical;
 
 import java.io.IOException;
 

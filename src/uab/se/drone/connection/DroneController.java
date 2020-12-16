@@ -1,4 +1,4 @@
-package uab.se.drone;
+package uab.se.drone.connection;
 
 import java.io.*;
 import java.net.*;
