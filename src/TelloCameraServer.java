@@ -17,9 +17,4 @@ public class TelloCameraServer extends VideoServer{
         Picture real = decoder.decodeFrame(ByteBuffer.wrap(message), out.getData());
         System.out.println(real.getWidth() +  " : " + real.getHeight());
     }
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 }
