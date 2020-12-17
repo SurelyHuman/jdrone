@@ -41,7 +41,7 @@ public class VideoReceiver extends Thread{
         running = false;
     }
 	
-	public void handleData(DatagramPacket packet) throws IOException {
+	protected void handleData(DatagramPacket packet) throws IOException {
 		String received = new String(packet.getData(), 0, packet.getLength());
 		System.out.println(received);
 	}
@@ -50,7 +50,8 @@ public class VideoReceiver extends Thread{
 		return videoSocket;
 	}
 
-	public void setVideoSocket(DatagramSocket videoSocket) {
+	@SuppressWarnings("unused")
+	private void setVideoSocket(DatagramSocket videoSocket) {
 		this.videoSocket = videoSocket;
 	}
 
@@ -58,7 +59,8 @@ public class VideoReceiver extends Thread{
 		return videoPort;
 	}
 
-	public void setVideoPort(int videoPort) {
+	@SuppressWarnings("unused")
+	private void setVideoPort(int videoPort) {
 		this.videoPort = videoPort;
 	}
 
@@ -66,7 +68,8 @@ public class VideoReceiver extends Thread{
 		return buf;
 	}
 
-	public void setBuf(byte[] buf) {
+	@SuppressWarnings("unused")
+	private void setBuf(byte[] buf) {
 		this.buf = buf;
 	}
 
