@@ -1,5 +1,6 @@
 package uab.se.drone.control.physical.tello;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -18,8 +19,9 @@ public class TelloDrone extends MultiRotorDrone {
 	 * 
 	 * @throws SocketException
 	 * @throws UnknownHostException
+	 * @throws FileNotFoundException 
 	 */
-	public TelloDrone() throws SocketException, UnknownHostException {
+	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
 	}
 	
