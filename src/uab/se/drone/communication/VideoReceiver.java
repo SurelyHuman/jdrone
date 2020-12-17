@@ -28,8 +28,7 @@ public class VideoReceiver extends Thread{
         	try {
         		DatagramPacket packet = new DatagramPacket(buf, buf.length);
         		videoSocket.receive(packet);
-        		String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(received);
+        		handleData(packet);
 			} 
         	catch (IOException e) {
 				e.printStackTrace();
@@ -38,9 +37,14 @@ public class VideoReceiver extends Thread{
         videoSocket.close();
 	}
 	
-	public void closeVideoSocket() {
+	public void closeVideoSocket() throws IOException {
         running = false;
     }
+	
+	public void handleData(DatagramPacket packet) throws IOException {
+		String received = new String(packet.getData(), 0, packet.getLength());
+		System.out.println(received);
+	}
 	
 	public DatagramSocket getVideoSocket() {
 		return videoSocket;
@@ -64,5 +68,13 @@ public class VideoReceiver extends Thread{
 
 	public void setBuf(byte[] buf) {
 		this.buf = buf;
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
 	}
 }

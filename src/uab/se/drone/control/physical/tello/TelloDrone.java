@@ -8,14 +8,16 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import uab.se.drone.communication.DroneController;
-import uab.se.drone.communication.VideoReceiver;
+//import uab.se.drone.communication.VideoReceiver;
 import uab.se.drone.control.physical.MultiRotorDrone;
+import uab.se.drone.util.VideoFileWriter;
 
 public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
-	private VideoReceiver flightCamera;
+	private VideoFileWriter flightCamera;
+	private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.txt";
 	
 	/***
 	 * 
@@ -25,7 +27,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
-		flightCamera = new VideoReceiver(11111, 8192);
+		flightCamera = new VideoFileWriter(11111, 8192, filePath);
 	}
 	
 	/***
@@ -36,7 +38,7 @@ public class TelloDrone extends MultiRotorDrone {
 		this.controller.sendCommand("command");
 	}
 	
-	public void end() {
+	public void end() throws IOException {
 		this.controller.closeControlSocket();
 		flightCamera.closeVideoSocket();
 		System.out.println("Exit Program...");
@@ -713,14 +715,5 @@ public class TelloDrone extends MultiRotorDrone {
 		tello.end();
 		//tello.controller.closeControlSocket();
 		System.out.println("Exit Program...");
-	}
-
-	public VideoReceiver getFlightCamera() {
-		return flightCamera;
-	}
-
-	public void setFlightCamera(VideoReceiver flightCamera) {
-		this.flightCamera = flightCamera;
-	}
-	
+	}	
 }
