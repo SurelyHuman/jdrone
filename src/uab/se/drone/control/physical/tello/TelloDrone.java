@@ -27,7 +27,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
-		flightCamera = new VideoFileWriter(11111, 8192, filePath);
+		flightCamera = new VideoFileWriter(11111, 2048, filePath);
 	}
 	
 	/***
