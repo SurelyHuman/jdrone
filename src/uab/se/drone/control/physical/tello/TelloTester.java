@@ -47,7 +47,7 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.streamOn();
-		tello.hoverInPlace(20);
+		tello.hoverInPlace(60);
 		tello.streamOff();
 		tello.end();
 	}
