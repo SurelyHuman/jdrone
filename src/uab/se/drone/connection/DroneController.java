@@ -29,7 +29,7 @@ public class DroneController {
 		DatagramPacket call = new DatagramPacket(data, data.length, droneAddress, dronePort);
 		DatagramPacket response = new DatagramPacket(new byte[receiveBufferSize], receiveBufferSize);
 		hostSocket.send(call);
-		hostSocket.setSoTimeout(20000);
+		hostSocket.setSoTimeout(15000);
 		try {
 			hostSocket.receive(response);
 			output = new String(response.getData(), "UTF-8").trim();
