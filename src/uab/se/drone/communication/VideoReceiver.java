@@ -28,7 +28,8 @@ public class VideoReceiver extends Thread{
         	try {
         		DatagramPacket packet = new DatagramPacket(buf, buf.length);
         		videoSocket.receive(packet);
-        		handleData(packet);
+        		byte[] send = packet.getData();
+        		handleData(send);
 			} 
         	catch (IOException e) {
 				e.printStackTrace();
@@ -41,8 +42,8 @@ public class VideoReceiver extends Thread{
         running = false;
     }
 	
-	protected void handleData(DatagramPacket packet) throws IOException {
-		String received = new String(packet.getData(), 0, packet.getLength());
+	protected void handleData(byte[] packet) throws IOException {
+		String received = new String(packet, 0, packet.length);
 		System.out.println(received);
 	}
 	

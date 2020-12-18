@@ -21,8 +21,8 @@ public class VideoFileWriter extends VideoReceiver {
 	}
 	
 	@Override
-	protected void handleData(DatagramPacket packet) throws IOException {
-		fos.write(packet.getData(), 0, packet.getLength());
+	protected void handleData(byte[] packet) throws IOException {
+		fos.write(packet, 0, packet.length);
 	}
 	
 	@Override
