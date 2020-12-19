@@ -29,17 +29,19 @@ public class TelloTester {
 	public static void testFlight() throws IOException, InterruptedException {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
+		tello.streamOn();
 		tello.takeoff();
 //		tello.gotoXY(1125, 700, 150);
 //		tello.gotoXYZ(1125, 700, 900, 150);
-		tello.decreaseAltitude(500);
-		tello.flyForward(850);
-		tello.hoverInPlace(20);
+//		tello.decreaseAltitude(500);
+		tello.flyForward(100);
+		//tello.hoverInPlace(10);
 		tello.turnCCW(180);
 		tello.flip("b");
+		tello.flyForward(100);
 		tello.flip("f");
-		tello.flyForward(850);
 		tello.land();
+		tello.streamOff();
 		tello.end();
 	}
 	
@@ -54,8 +56,8 @@ public class TelloTester {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//testGetters();
-		//testFlight();
-		testVideo();
+		testFlight();
+		//testVideo();
 		System.exit(0);
 	}
 
