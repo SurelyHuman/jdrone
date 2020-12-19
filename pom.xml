@@ -30,5 +30,10 @@
       <artifactId>humble-video-all</artifactId>
       <version>0.3.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.bytedeco</groupId>
+      <artifactId>javacv-platform</artifactId>
+      <version>1.5.4</version>
+  	</dependency>
   </dependencies>
 </project>
