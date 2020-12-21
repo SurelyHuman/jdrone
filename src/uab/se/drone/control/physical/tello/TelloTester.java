@@ -58,8 +58,8 @@ public class TelloTester {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//testGetters();
-		//testFlight();
-		testVideo();
+		testFlight();
+		//testVideo();
 		System.exit(0);
 	}
 

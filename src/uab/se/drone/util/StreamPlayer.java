@@ -19,10 +19,8 @@ public class StreamPlayer extends Thread{
 	private int port;
 	private int frameWidth, frameHeight;
 	
-	public StreamPlayer(int port, int frameWidth, int frameHeight) {
+	public StreamPlayer(int port) {
 		this.port = port;
-		this.frameWidth = frameWidth;
-		this.frameHeight = frameHeight;
 	}
 
 	@SuppressWarnings("resource")
@@ -33,11 +31,11 @@ public class StreamPlayer extends Thread{
 
 		final FFmpegFrameGrabber fg = new FFmpegFrameGrabber("udp://@:" + port);
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		window.setCanvasSize(frameWidth, frameHeight);
+		// window.setCanvasSize(frameWidth, frameHeight);
 
 		try {
 			fg.start();
-			// window.setCanvasSize(fg.getImageWidth(), fg.getImageHeight());
+			window.setCanvasSize(fg.getImageWidth(), fg.getImageHeight());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
