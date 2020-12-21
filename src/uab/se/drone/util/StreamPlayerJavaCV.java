@@ -43,9 +43,9 @@ public class StreamPlayerJavaCV extends Thread{
 							window.showImage(frames.remove());
 						}
 					}
+					handleData(frame); // extend class and add CV  
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -56,9 +56,22 @@ public class StreamPlayerJavaCV extends Thread{
 			e.printStackTrace();
 		}
 	}
-
+	
+	/***
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void closeVideoStream() throws IOException, InterruptedException {
 		running = false;
+	}
+	
+	/***
+	 * Override this method on class extension and add CV methods
+	 * @param data
+	 */
+	public void handleData(Frame data) {
+		
 	}
 
 	public boolean isRunning() {
