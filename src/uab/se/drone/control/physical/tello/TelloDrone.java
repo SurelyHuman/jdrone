@@ -7,10 +7,11 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import uab.se.drone.Constants;
 import uab.se.drone.communication.DroneController;
 //import uab.se.drone.communication.VideoReceiver;
 import uab.se.drone.control.physical.MultiRotorDrone;
-import uab.se.drone.util.StreamPlayerJavaCV;
+import uab.se.drone.util.StreamPlayer;
 //import uab.se.drone.util.VideoFileWriter;
 //import uab.se.drone.util.VideoStreamSwing;
 
@@ -18,7 +19,7 @@ public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
-	private StreamPlayerJavaCV flightCamera;
+	private StreamPlayer flightCamera;
 	//private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4";
 	
 	/***
@@ -29,7 +30,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
-		flightCamera = new StreamPlayerJavaCV();
+		flightCamera = new StreamPlayer(11111, Constants.VIDEO_WIDTH, Constants.VIDEO_HEIGHT);
 	}
 	
 	/***

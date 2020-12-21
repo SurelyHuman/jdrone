@@ -11,35 +11,44 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class StreamPlayerJavaCV extends Thread{
+public class StreamPlayer extends Thread{
 
 	private static final CanvasFrame window = new CanvasFrame( "Live Feed", 1.0 );
 	private static final Queue<Frame> frames = new LinkedList<>();
 	private volatile boolean running = false;
+	private int port;
+	private int frameWidth, frameHeight;
+	
+	public StreamPlayer(int port, int frameWidth, int frameHeight) {
+		this.port = port;
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
+	}
 
+	@SuppressWarnings("resource")
 	public void run() {
 		System.out.println("Stream On" + '\n');
 
 		running = true;
 
-		final FFmpegFrameGrabber fg = new FFmpegFrameGrabber("udp://@:11111");
+		final FFmpegFrameGrabber fg = new FFmpegFrameGrabber("udp://@:" + port);
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		window.setCanvasSize(frameWidth, frameHeight);
 
 		try {
 			fg.start();
-			window.setCanvasSize(fg.getImageWidth(), fg.getImageHeight());
+			// window.setCanvasSize(fg.getImageWidth(), fg.getImageHeight());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
+		Frame frame;
 		while(running) {
-			Frame frame;
 			try {
 				if((frame = fg.grabImage()) != null) {
 					synchronized(frames) {
 						frames.add(frame.clone());
-						if(!frames.isEmpty()) {
+						while(!frames.isEmpty()) {
 							window.showImage(frames.remove());
 						}
 					}
@@ -80,5 +89,21 @@ public class StreamPlayerJavaCV extends Thread{
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public void setFrameWidth(int frameWidth) {
+		this.frameWidth = frameWidth;
+	}
+
+	public int getFrameHeight() {
+		return frameHeight;
+	}
+
+	public void setFrameHeight(int frameHeight) {
+		this.frameHeight = frameHeight;
 	}
 }

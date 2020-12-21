@@ -30,6 +30,7 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.streamOn();
+		tello.hoverInPlace(10);
 		tello.takeoff();
 //		tello.gotoXY(1125, 700, 150);
 //		tello.gotoXYZ(1125, 700, 900, 150);
@@ -40,6 +41,7 @@ public class TelloTester {
 		tello.flip("b");
 		tello.flyForward(100);
 		tello.flip("f");
+		tello.turnCW(180);
 		tello.land();
 		tello.streamOff();
 		tello.end();
