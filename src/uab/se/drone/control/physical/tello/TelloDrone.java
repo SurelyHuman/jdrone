@@ -10,15 +10,16 @@ import java.util.concurrent.TimeUnit;
 import uab.se.drone.communication.DroneController;
 //import uab.se.drone.communication.VideoReceiver;
 import uab.se.drone.control.physical.MultiRotorDrone;
-import uab.se.drone.util.VideoFileWriter;
+import uab.se.drone.util.StreamPlayerJavaCV;
+//import uab.se.drone.util.VideoFileWriter;
 //import uab.se.drone.util.VideoStreamSwing;
 
 public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
-	private VideoFileWriter flightCamera;
-	private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4";
+	private StreamPlayerJavaCV flightCamera;
+	//private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4";
 	
 	/***
 	 * 
@@ -28,7 +29,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
-		flightCamera = new VideoFileWriter(11111, 1460, filePath);
+		flightCamera = new StreamPlayerJavaCV();
 	}
 	
 	/***
@@ -39,9 +40,9 @@ public class TelloDrone extends MultiRotorDrone {
 		this.controller.sendCommand("command");
 	}
 	
-	public void end() throws IOException {
+	public void end() throws IOException, InterruptedException {
 		this.controller.closeControlSocket();
-		flightCamera.closeVideoSocket();
+		flightCamera.closeVideoStream();
 		System.out.println("Exit Program...");
 	}
 	
@@ -60,8 +61,8 @@ public class TelloDrone extends MultiRotorDrone {
 	 * @throws IOException
 	 */
 	public void streamOn() throws IOException {
-		flightCamera.start();
 		this.controller.sendCommand("streamon");
+		flightCamera.start();
 	}
 	
 	/***
@@ -695,8 +696,9 @@ public class TelloDrone extends MultiRotorDrone {
 	 * 
 	 * @param args
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		TelloDrone tello = new TelloDrone();
 		
 		System.out.println("Tello Drone Demo" + "\n");

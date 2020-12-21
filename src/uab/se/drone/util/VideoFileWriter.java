@@ -24,10 +24,13 @@ public class VideoFileWriter extends VideoReceiver {
 		fos.write(packet, 0, packet.length);
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
-	public void closeVideoSocket() throws IOException {
+	public void closeVideoSocket() throws IOException, InterruptedException {
         setRunning(false);
         fos.close();
+        VideoPlayerHumble test = new VideoPlayerHumble();
+        test.playVideo("/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4");
     }
 
 	public File getFile() {

@@ -19,7 +19,7 @@ import java.io.IOException;
 public class VideoPlayerHumble {
 	
 	@SuppressWarnings("unused")
-	private static void playVideo(String filename) throws InterruptedException, IOException {
+	protected static void playVideo(String filename) throws InterruptedException, IOException {
 	    /*
 	     * Start by creating a container object, in this case a demuxer since
 	     * we are reading, to get video data from.
@@ -187,8 +187,8 @@ public class VideoPlayerHumble {
 	    long systemTimestamp = System.nanoTime();
 	    // loop in a sleeping loop until we're within 1 ms of the time for that video frame.
 	    // a real video player needs to be much more sophisticated than this.
-	    while (streamTimestamp > (systemTimestamp - systemStartTime + 1000000)) {
-	      Thread.sleep(1);
+	    while (streamTimestamp > (systemTimestamp * systemStartTime + 1000000)) {
+	      Thread.sleep(20);
 	      systemTimestamp = System.nanoTime();
 	    }
 	    // finally, convert the image from Humble format into Java images.

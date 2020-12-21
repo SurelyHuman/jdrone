@@ -31,18 +31,18 @@ public class VideoReceiver extends Thread{
         		byte[] send = packet.getData();
         		handleData(send);
 			} 
-        	catch (IOException e) {
+        	catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
         }
         videoSocket.close();
 	}
 	
-	public void closeVideoSocket() throws IOException {
+	public void closeVideoSocket() throws IOException, InterruptedException {
         running = false;
     }
 	
-	protected void handleData(byte[] packet) throws IOException {
+	protected void handleData(byte[] packet) throws IOException, InterruptedException {
 		String received = new String(packet, 0, packet.length);
 		System.out.println(received);
 	}

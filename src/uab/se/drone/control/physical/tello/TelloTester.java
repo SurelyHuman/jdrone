@@ -33,9 +33,9 @@ public class TelloTester {
 		tello.takeoff();
 //		tello.gotoXY(1125, 700, 150);
 //		tello.gotoXYZ(1125, 700, 900, 150);
-//		tello.decreaseAltitude(500);
+//		tello.decreaseAltitude(500); // test crash prevention
 		tello.flyForward(100);
-		//tello.hoverInPlace(10);
+//		tello.hoverInPlace(10);
 		tello.turnCCW(180);
 		tello.flip("b");
 		tello.flyForward(100);
@@ -56,8 +56,8 @@ public class TelloTester {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//testGetters();
-		testFlight();
-		//testVideo();
+		//testFlight();
+		testVideo();
 		System.exit(0);
 	}
 
