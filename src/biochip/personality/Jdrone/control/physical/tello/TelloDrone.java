@@ -1,4 +1,4 @@
-package uab.se.drone.control.physical.tello;
+package biochip.personality.Jdrone.control.physical.tello;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import uab.se.drone.communication.DroneController;
-import uab.se.drone.control.physical.MultiRotorDrone;
-import uab.se.drone.util.StreamPlayer;
-import uab.se.drone.util.StreamRecorder;
+import biochip.personality.Jdrone.communication.DroneController;
+import biochip.personality.Jdrone.control.physical.MultiRotorDrone;
+import biochip.personality.Jdrone.util.StreamPlayer;
+import biochip.personality.Jdrone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
 	

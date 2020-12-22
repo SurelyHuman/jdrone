@@ -1,4 +1,4 @@
-package uab.se.drone.util;
+package biochip.personality.Jdrone.util;
 
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FFmpegFrameGrabber;

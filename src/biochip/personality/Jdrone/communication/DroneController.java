@@ -1,4 +1,4 @@
-package uab.se.drone.communication;
+package biochip.personality.Jdrone.communication;
 
 import java.io.*;
 import java.net.*;

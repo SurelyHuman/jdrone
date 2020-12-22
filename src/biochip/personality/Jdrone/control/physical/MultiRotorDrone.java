@@ -1,4 +1,4 @@
-package uab.se.drone.control.physical;
+package biochip.personality.Jdrone.control.physical;
 
 import java.io.IOException;
 

@@ -1,8 +1,8 @@
-package uab.se.drone.control.physical;
+package biochip.personality.Jdrone.control.physical;
 
 import java.io.IOException;
 
-import uab.se.drone.communication.DroneController;
+import biochip.personality.Jdrone.communication.DroneController;
 
 public abstract class PhysicalDrone {
 	

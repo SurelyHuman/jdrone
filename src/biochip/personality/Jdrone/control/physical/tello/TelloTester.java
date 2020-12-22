@@ -1,4 +1,4 @@
-package uab.se.drone.control.physical.tello;
+package biochip.personality.Jdrone.control.physical.tello;
 
 import java.io.IOException;
 
