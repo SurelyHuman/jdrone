@@ -1,4 +1,4 @@
-package biochip.personality.Jdrone.util;
+package org.surelyhuman.jdrone.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

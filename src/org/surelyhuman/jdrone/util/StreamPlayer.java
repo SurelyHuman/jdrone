@@ -1,4 +1,4 @@
-package biochip.personality.Jdrone.util;
+package org.surelyhuman.jdrone.util;
 
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FFmpegFrameGrabber;

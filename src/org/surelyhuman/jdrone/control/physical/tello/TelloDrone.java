@@ -1,4 +1,4 @@
-package biochip.personality.Jdrone.control.physical.tello;
+package org.surelyhuman.jdrone.control.physical.tello;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import biochip.personality.Jdrone.communication.DroneController;
-import biochip.personality.Jdrone.control.physical.MultiRotorDrone;
-import biochip.personality.Jdrone.util.StreamPlayer;
-import biochip.personality.Jdrone.util.StreamRecorder;
+import org.surelyhuman.jdrone.communication.DroneController;
+import org.surelyhuman.jdrone.control.physical.MultiRotorDrone;
+import org.surelyhuman.jdrone.util.StreamPlayer;
+import org.surelyhuman.jdrone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
 	

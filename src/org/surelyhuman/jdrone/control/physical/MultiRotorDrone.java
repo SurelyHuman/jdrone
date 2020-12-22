@@ -1,4 +1,4 @@
-package biochip.personality.Jdrone.control.physical;
+package org.surelyhuman.jdrone.control.physical;
 
 import java.io.IOException;
 

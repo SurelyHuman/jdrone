@@ -1,4 +1,4 @@
-package biochip.personality.Jdrone.communication;
+package org.surelyhuman.jdrone.communication;
 
 import java.io.*;
 import java.net.*;

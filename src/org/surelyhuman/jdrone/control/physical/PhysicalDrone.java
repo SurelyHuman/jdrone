@@ -1,8 +1,8 @@
-package biochip.personality.Jdrone.control.physical;
+package org.surelyhuman.jdrone.control.physical;
 
 import java.io.IOException;
 
-import biochip.personality.Jdrone.communication.DroneController;
+import org.surelyhuman.jdrone.communication.DroneController;
 
 public abstract class PhysicalDrone {
 	
