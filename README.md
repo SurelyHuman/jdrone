@@ -1,3 +1,3 @@
-# CS420_Drone_Files
+# JDrone
 
-provided files for adding drone flight to an implementation
+provided files for adding drone flight to a Java implementation
