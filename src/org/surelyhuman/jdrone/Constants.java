@@ -23,5 +23,7 @@ public class Constants {
 	
 	public static final int VIDEO_WIDTH = 960;
     public static final int VIDEO_HEIGHT = 720;
+    
+    public static final String QUALIFIED_PATH_COMPLETION = "/Users/MasterControlProgram/git";
 	
 }

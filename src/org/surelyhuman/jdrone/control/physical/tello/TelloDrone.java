@@ -18,7 +18,7 @@ public class TelloDrone extends MultiRotorDrone {
 	private final int maxDist = maxGoto;
 	private StreamPlayer flightCamera;
 	private StreamRecorder flightRecorder;
-	//private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4";
+	//private String filePath = "/Users/MasterControlProgram/git/jdrone/src/VideoRecv.mp4";
 	
 	/***
 	 * 

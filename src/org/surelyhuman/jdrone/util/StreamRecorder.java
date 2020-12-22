@@ -8,6 +8,7 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber.Exception;
+import org.surelyhuman.jdrone.Constants;
 
 public class StreamRecorder extends Thread{
 
@@ -58,7 +59,7 @@ public class StreamRecorder extends Thread{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder("/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv" + n + ".mp4", 
+        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(Constants.QUALIFIED_PATH_COMPLETION + "/jdrone/src/VideoRecv" + n + ".mp4", 
         		grabber.getImageWidth(), grabber.getImageHeight(), 0);
         try {
 			recorder.start();
