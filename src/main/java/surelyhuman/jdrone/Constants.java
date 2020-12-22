@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone;
+package main.java.surelyhuman.jdrone;
 
 
 

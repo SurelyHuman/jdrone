@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone.control.physical.tello;
+package main.java.surelyhuman.jdrone.control.physical.tello;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,10 +7,10 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import org.surelyhuman.jdrone.communication.DroneController;
-import org.surelyhuman.jdrone.control.physical.MultiRotorDrone;
-import org.surelyhuman.jdrone.util.StreamPlayer;
-import org.surelyhuman.jdrone.util.StreamRecorder;
+import main.java.surelyhuman.jdrone.control.DroneController;
+import main.java.surelyhuman.jdrone.control.physical.MultiRotorDrone;
+import main.java.surelyhuman.jdrone.util.StreamPlayer;
+import main.java.surelyhuman.jdrone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
 	

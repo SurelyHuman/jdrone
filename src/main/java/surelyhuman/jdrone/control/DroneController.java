@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone.communication;
+package main.java.surelyhuman.jdrone.control;
 
 import java.io.*;
 import java.net.*;

@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone.util;
+package main.java.surelyhuman.jdrone.util;
 
 import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FFmpegFrameGrabber;

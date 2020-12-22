@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone.control.physical;
+package main.java.surelyhuman.jdrone.control.physical;
 
 import java.io.IOException;
 

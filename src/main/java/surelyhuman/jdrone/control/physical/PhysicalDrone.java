@@ -1,8 +1,8 @@
-package org.surelyhuman.jdrone.control.physical;
+package main.java.surelyhuman.jdrone.control.physical;
 
 import java.io.IOException;
 
-import org.surelyhuman.jdrone.communication.DroneController;
+import main.java.surelyhuman.jdrone.control.DroneController;
 
 public abstract class PhysicalDrone {
 	

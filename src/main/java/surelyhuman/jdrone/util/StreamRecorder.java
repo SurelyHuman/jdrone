@@ -1,4 +1,4 @@
-package org.surelyhuman.jdrone.util;
+package main.java.surelyhuman.jdrone.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,7 +8,8 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber.Exception;
-import org.surelyhuman.jdrone.Constants;
+
+import main.java.surelyhuman.jdrone.Constants;
 
 public class StreamRecorder extends Thread{
 
