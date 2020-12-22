@@ -13,11 +13,9 @@ import java.util.Queue;
 
 public class StreamPlayer extends Thread{
 
-	private static final CanvasFrame window = new CanvasFrame( "Live Feed", 1.0 );
 	private static final Queue<Frame> frames = new LinkedList<>();
 	private volatile boolean running = false;
 	private int port;
-	private int frameWidth, frameHeight;
 	
 	public StreamPlayer(int port) {
 		this.port = port;
@@ -28,10 +26,11 @@ public class StreamPlayer extends Thread{
 		System.out.println("Stream On" + '\n');
 
 		running = true;
+		
+		CanvasFrame window = new CanvasFrame( "Live Feed", 1.0 );
 
 		final FFmpegFrameGrabber fg = new FFmpegFrameGrabber("udp://@:" + port);
 		window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		// window.setCanvasSize(frameWidth, frameHeight);
 
 		try {
 			fg.start();
@@ -87,21 +86,5 @@ public class StreamPlayer extends Thread{
 
 	public void setRunning(boolean running) {
 		this.running = running;
-	}
-
-	public int getFrameWidth() {
-		return frameWidth;
-	}
-
-	public void setFrameWidth(int frameWidth) {
-		this.frameWidth = frameWidth;
-	}
-
-	public int getFrameHeight() {
-		return frameHeight;
-	}
-
-	public void setFrameHeight(int frameHeight) {
-		this.frameHeight = frameHeight;
 	}
 }

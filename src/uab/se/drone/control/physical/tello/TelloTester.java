@@ -30,6 +30,7 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.streamOn();
+		tello.streamViewOn();
 		tello.hoverInPlace(10);
 		tello.takeoff();
 //		tello.gotoXY(1125, 700, 150);
@@ -44,6 +45,7 @@ public class TelloTester {
 		tello.turnCW(180);
 		tello.land();
 		tello.streamOff();
+		tello.streamViewOff();
 		tello.end();
 	}
 	
@@ -51,15 +53,19 @@ public class TelloTester {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.streamOn();
-		tello.hoverInPlace(40);
+		//tello.streamViewOn();
+		tello.streamRecordOn();
+		tello.hoverInPlace(60);
 		tello.streamOff();
+		//tello.streamViewOff();
+		tello.streamRecordOff();
 		tello.end();
 	}
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//testGetters();
-		testFlight();
-		//testVideo();
+		//testFlight();
+		testVideo();
 		System.exit(0);
 	}
 

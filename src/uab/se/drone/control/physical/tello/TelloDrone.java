@@ -8,16 +8,16 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import uab.se.drone.communication.DroneController;
-//import uab.se.drone.communication.VideoReceiver;
 import uab.se.drone.control.physical.MultiRotorDrone;
 import uab.se.drone.util.StreamPlayer;
-//import uab.se.drone.util.VideoFileWriter;
+import uab.se.drone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
 	
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
 	private StreamPlayer flightCamera;
+	private StreamRecorder flightRecorder;
 	//private String filePath = "/Users/MasterControlProgram/git/CS420_520_Drone_Library/src/VideoRecv.mp4";
 	
 	/***
@@ -27,8 +27,9 @@ public class TelloDrone extends MultiRotorDrone {
 	 * @throws FileNotFoundException 
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
-		this.controller = new DroneController(9000, /*11111,*/ 8889, "192.168.10.1");
+		this.controller = new DroneController(9000, 8889, "192.168.10.1");
 		flightCamera = new StreamPlayer(11111);
+		flightRecorder = new StreamRecorder(11111);
 	}
 	
 	/***
@@ -41,7 +42,6 @@ public class TelloDrone extends MultiRotorDrone {
 	
 	public void end() throws IOException, InterruptedException {
 		this.controller.closeControlSocket();
-		flightCamera.closeVideoStream();
 		System.out.println("Exit Program...");
 	}
 	
@@ -61,7 +61,6 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void streamOn() throws IOException {
 		this.controller.sendCommand("streamon");
-		flightCamera.start();
 	}
 	
 	/***
@@ -70,6 +69,22 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void streamOff() throws IOException {
 		this.controller.sendCommand("streamoff");
+	}
+	
+	public void streamViewOn() {
+		flightCamera.start();
+	}
+	
+	public void streamViewOff() throws IOException, InterruptedException {
+		flightCamera.closeVideoStream();
+	}
+	
+	public void streamRecordOn() {
+		flightRecorder.start();
+	}
+	
+	public void streamRecordOff() throws IOException, InterruptedException {
+		flightRecorder.endVideoRecord();
 	}
 	
 	/***
