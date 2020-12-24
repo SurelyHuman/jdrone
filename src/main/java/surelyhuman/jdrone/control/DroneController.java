@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class DroneController {
 
-	private DatagramSocket hostSocket; //, videoSocket;
+	private DatagramSocket hostSocket;
 	private int dronePort;
 	private final int receiveBufferSize = 8192;
 	private InetAddress droneAddress;
@@ -15,9 +15,8 @@ public class DroneController {
 
 	}
 
-	public DroneController(int hostPort, /*int videoPort,*/ int dronePort, String destinationAddress) throws SocketException, UnknownHostException {
+	public DroneController(int hostPort, int dronePort, String destinationAddress) throws SocketException, UnknownHostException {
 		hostSocket = new DatagramSocket(hostPort);
-		//videoSocket = new DatagramSocket(videoPort);
 		this.dronePort = dronePort;
 		droneAddress = InetAddress.getByName(destinationAddress);
 	}
@@ -45,18 +44,12 @@ public class DroneController {
 
 	public void closeControlSocket() {
 		hostSocket.close();
-		//videoSocket.close();
 		System.out.println("All sockets closed... ");
 	}
 
 	public DatagramSocket getHostSocket() {
 		return hostSocket;
 	}
-
-	/*public DatagramSocket getVideoSocket() {
-		return videoSocket;
-	}*/
-
 
 	public int getDronePort() {
 		return dronePort;
