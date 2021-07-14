@@ -16,7 +16,7 @@ public class StreamPlayer extends Thread{
 	private static final Queue<Frame> frames = new LinkedList<>();
 	private volatile boolean running = false;
 	private int port;
-	
+
 	public StreamPlayer(int port) {
 		this.port = port;
 	}
@@ -26,7 +26,7 @@ public class StreamPlayer extends Thread{
 		System.out.println("Stream On" + '\n');
 
 		running = true;
-		
+
 		CanvasFrame window = new CanvasFrame( "Live Feed", 1.0 );
 
 		final FFmpegFrameGrabber fg = new FFmpegFrameGrabber("udp://@:" + port);
@@ -62,7 +62,7 @@ public class StreamPlayer extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @throws IOException
@@ -71,13 +71,13 @@ public class StreamPlayer extends Thread{
 	public void closeVideoStream() throws IOException, InterruptedException {
 		running = false;
 	}
-	
+
 	/***
 	 * Override this method on class extension and add CV methods
 	 * @param data
 	 */
 	public void handleData(Frame data) {
-		
+
 	}
 
 	public boolean isRunning() {

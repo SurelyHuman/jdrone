@@ -5,7 +5,7 @@ import java.io.IOException;
 import main.java.surelyhuman.jdrone.control.physical.tello.TelloDrone;
 
 public class TelloFlightDemo {
-	
+
 	private static void flight() throws InterruptedException, IOException {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
@@ -24,7 +24,7 @@ public class TelloFlightDemo {
 		tello.streamViewOff();
 		tello.end();
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException, IOException {
 		flight();
 		System.exit(0);

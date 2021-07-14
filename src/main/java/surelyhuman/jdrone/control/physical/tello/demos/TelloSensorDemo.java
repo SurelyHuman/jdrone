@@ -27,7 +27,7 @@ public class TelloSensorDemo {
 		System.out.println(tello.getSerialNumber());
 		tello.end();
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException, IOException {
 		sensors();
 		System.exit(0);

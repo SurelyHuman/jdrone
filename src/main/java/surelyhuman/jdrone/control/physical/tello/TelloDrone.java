@@ -13,13 +13,13 @@ import main.java.surelyhuman.jdrone.util.StreamPlayer;
 import main.java.surelyhuman.jdrone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
-	
+
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
 	private StreamPlayer flightCamera;
 	private StreamRecorder flightRecorder;
 	//private String filePath = "/Users/MasterControlProgram/git/jdrone/src/VideoRecv.mp4";
-	
+
 	/***
 	 * 
 	 * @throws SocketException
@@ -31,7 +31,7 @@ public class TelloDrone extends MultiRotorDrone {
 		flightCamera = new StreamPlayer(11111);
 		flightRecorder = new StreamRecorder(11111);
 	}
-	
+
 	/***
 	 * 
 	 * @throws IOException
@@ -39,12 +39,12 @@ public class TelloDrone extends MultiRotorDrone {
 	public void activateSDK() throws IOException {
 		this.controller.sendCommand("command");
 	}
-	
+
 	public void end() throws IOException, InterruptedException {
 		this.controller.closeControlSocket();
 		System.out.println("Exit Program...");
 	}
-	
+
 	@Override
 	public void takeoff() throws IOException {
 		this.controller.sendCommand("takeoff");
@@ -54,7 +54,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void land() throws IOException {
 		this.controller.sendCommand("land");
 	}
-	
+
 	/***
 	 * 
 	 * @throws IOException
@@ -62,7 +62,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void streamOn() throws IOException {
 		this.controller.sendCommand("streamon");
 	}
-	
+
 	/***
 	 * 
 	 * @throws IOException
@@ -70,23 +70,23 @@ public class TelloDrone extends MultiRotorDrone {
 	public void streamOff() throws IOException {
 		this.controller.sendCommand("streamoff");
 	}
-	
+
 	public void streamViewOn() {
 		flightCamera.start();
 	}
-	
+
 	public void streamViewOff() throws IOException, InterruptedException {
 		flightCamera.closeVideoStream();
 	}
-	
+
 	public void streamRecordOn() {
 		flightRecorder.start();
 	}
-	
+
 	public void streamRecordOff() throws IOException, InterruptedException {
 		flightRecorder.endVideoRecord();
 	}
-	
+
 	/***
 	 * 
 	 * @throws IOException
@@ -102,7 +102,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void missionPadOff() throws IOException {
 		this.controller.sendCommand("moff");
 	}
-	
+
 	/***
 	 * 
 	 * @param param
@@ -143,7 +143,7 @@ public class TelloDrone extends MultiRotorDrone {
 		}
 		else this.controller.sendCommand("forward " + front);
 	}
-	
+
 	@Override
 	public void flyBackward(int back) throws IOException {
 		if (back <= minDist) this.controller.sendCommand("back " + minDist);
@@ -193,7 +193,7 @@ public class TelloDrone extends MultiRotorDrone {
 		}
 		else this.controller.sendCommand("ccw " + degrees);
 	}
-	
+
 	/***
 	 * 
 	 * @param x
@@ -204,7 +204,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void gotoXYZ(int x, int y, int z, int speed) throws IOException {
 		int zNext = 0;
-//		if (getHeight() + z <= 0) z = 10 - getHeight();
+		//		if (getHeight() + z <= 0) z = 10 - getHeight();
 		if (z < minGoto) {
 			zNext = z + maxGoto;
 			z = minGoto;
@@ -268,7 +268,7 @@ public class TelloDrone extends MultiRotorDrone {
 			}
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @param x
@@ -330,7 +330,7 @@ public class TelloDrone extends MultiRotorDrone {
 			}
 		}
 	}
-	
+
 	/***
 	 * SDK 2.0 only
 	 * @param x
@@ -343,7 +343,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void gotoMissionPadXYZ(int x, int y, int z, int speed, String ID) throws IOException {
 		// TODO Implement in future release
 	}
-	
+
 	/***
 	 * SDK 2.0 only
 	 * @param x
@@ -406,7 +406,7 @@ public class TelloDrone extends MultiRotorDrone {
 			}
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @param x1
@@ -420,12 +420,12 @@ public class TelloDrone extends MultiRotorDrone {
 	public void flyCurve(int x1, int y1, int z1, int x2, int y2, int z2, int speed) {
 		// TODO Implement in future release
 	}
-	
+
 	@Override
 	public void flip(String direction) throws IOException {
 		this.controller.sendCommand("flip " + direction);
 	}
-	
+
 	/***
 	 * SDK 2.0 only
 	 * @param x1
@@ -455,7 +455,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void jumpMissionPad(int x, int y, int z, int speed, int yaw, String ID1, String ID2) {
 		// TODO Implement in future release
 	}
-	
+
 	/***
 	 * using getBattery() to reset watchdog failsafe
 	 */
@@ -477,7 +477,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return;
 		}
 	}
-	
+
 	/***
 	 * Actual interrupt, will determine usefulness in future release
 	 * @throws IOException
@@ -485,7 +485,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void stopInPlace() throws IOException {
 		this.controller.sendCommand("stop");
 	}
-	
+
 	/***
 	 * EMERGENCY ONLY!!! Shuts down all motors even mid flight
 	 * @throws IOException
@@ -493,7 +493,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void emergencyStop() throws IOException {
 		this.controller.sendCommand("emergency");
 	}
-	
+
 	@Override
 	public void setSpeed(int speed) throws IOException {
 		if (speed <= minSpeed) this.controller.sendCommand("speed " + minSpeed);
@@ -502,7 +502,7 @@ public class TelloDrone extends MultiRotorDrone {
 		}
 		else this.controller.sendCommand("speed " + speed);
 	}
-	
+
 	/***
 	 * 
 	 * @param SSID
@@ -512,7 +512,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void setWifi(String SSID, String password) throws IOException {
 		this.controller.sendCommand("wifi " + SSID + " " + password);
 	}
-	
+
 	/***
 	 * 
 	 * @param SSID
@@ -522,7 +522,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public void setAccessPoint(String SSID, String password) throws IOException {
 		this.controller.sendCommand("ap " + SSID + " " + password);
 	}
-	
+
 	public double getSpeed() throws IOException {
 		try {
 			return Double.parseDouble(this.controller.sendCommand("speed?"));
@@ -541,7 +541,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return 0;
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @return
@@ -559,7 +559,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return 0;
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @return
@@ -573,7 +573,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return 0;
 		}
 	}
-	
+
 	@Override
 	public int getFlightTime() throws IOException {
 		try {
@@ -643,7 +643,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return 0;
 		}
 	}
-	
+
 	@Override
 	public double getAccelerationY() throws IOException {
 		try {
@@ -678,7 +678,7 @@ public class TelloDrone extends MultiRotorDrone {
 			return 0;
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @return
@@ -705,7 +705,7 @@ public class TelloDrone extends MultiRotorDrone {
 	public String getSerialNumber() throws IOException {
 		return this.controller.sendCommand("sn?");
 	}
-	
+
 	/***
 	 * 
 	 * @param args
@@ -714,11 +714,11 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		TelloDrone tello = new TelloDrone();
-		
+
 		System.out.println("Tello Drone Demo" + "\n");
 		System.out.println("Tello: command takeoff land flip forward back left right" + "\n" + "      " + " up down cw ccw speed speed?" + "\n");
 		System.out.println("end -- quit demo" + "\n");
-		
+
 		Scanner scan = new Scanner(System.in);
 
 		String command = scan.nextLine();

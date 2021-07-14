@@ -10,14 +10,14 @@ public abstract class MultiRotorDrone extends PhysicalDrone implements FlightCon
 	 * @throws IOException 
 	 */
 	public abstract void flyBackward(int back) throws IOException;
-	
+
 	/***
 	 * 
 	 * @param direction
 	 * @throws IOException 
 	 */
 	public abstract void flip(String direction) throws IOException;
-	
+
 	/***
 	 * 
 	 * @param seconds
@@ -25,5 +25,5 @@ public abstract class MultiRotorDrone extends PhysicalDrone implements FlightCon
 	 * @throws IOException 
 	 */
 	public abstract void hoverInPlace(int seconds) throws InterruptedException, IOException;	
-	
+
 }

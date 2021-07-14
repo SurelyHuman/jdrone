@@ -16,7 +16,7 @@ public class TelloCameraStreamRecordDemo {
 		tello.streamRecordOff();
 		tello.end();
 	}
-	
+
 	public static void main(String[] args) throws InterruptedException, IOException {
 		record();
 		System.exit(0);
