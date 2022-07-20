@@ -9,16 +9,16 @@ import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber.Exception;
 
-import main.java.surelyhuman.jdrone.Constants;
-
 public class StreamRecorder extends Thread{
 
 	private static final int RECORD_LENGTH = 5000;
 	private volatile boolean running = false;
 	private int videoPort;
+	private String filePath;
 
-	public StreamRecorder(int videoPort) throws FileNotFoundException, SocketException {
+	public StreamRecorder(int videoPort, String filePath) throws FileNotFoundException, SocketException {
 		this.videoPort = videoPort;
+		this.filePath = filePath;
 	}
 
 	public void run() {
@@ -60,7 +60,7 @@ public class StreamRecorder extends Thread{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(Constants.QUALIFIED_PATH_COMPLETION + "/jdrone/src/VideoRecv" + n + ".mp4", 
+		FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(filePath + n + ".mp4", 
 				grabber.getImageWidth(), grabber.getImageHeight(), 0);
 		try {
 			recorder.start();

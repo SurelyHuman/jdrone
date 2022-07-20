@@ -4,16 +4,16 @@ import java.io.IOException;
 
 import main.java.surelyhuman.jdrone.control.physical.tello.TelloDrone;
 
-public class TelloCameraStreamPlayDemo {
+public class TelloCameraStreamPlaySwingDemo {
 
 	private static void stream() throws IOException, InterruptedException  {
 		TelloDrone tello = new TelloDrone();
 		tello.activateSDK();
 		tello.streamOn();
-		tello.streamViewOn();
-		tello.hoverInPlace(60);
+		tello.streamViewSwingOn();
+		tello.hoverInPlace(30);
 		tello.streamOff();
-		tello.streamViewOff();
+		tello.streamViewSwingOff();
 		tello.end();
 	}
 

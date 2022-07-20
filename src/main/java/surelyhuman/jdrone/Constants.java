@@ -1,7 +1,5 @@
 package main.java.surelyhuman.jdrone;
 
-
-
 /***
  * Convenience class for storing constants needed for unit conversion and flight
  * 09/30/2019 v1.0
@@ -24,6 +22,6 @@ public class Constants {
 	public static final int VIDEO_WIDTH = 960;
 	public static final int VIDEO_HEIGHT = 720;
 
-	public static final String QUALIFIED_PATH_COMPLETION = "/Users/MasterControlProgram/git"; //change to your repo folder
-
+	public static final String QUALIFIED_PATH_COMPLETION = "~/git/jdrone/src/VideoRecv"; 
+	
 }

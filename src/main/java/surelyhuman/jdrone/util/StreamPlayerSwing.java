@@ -11,13 +11,13 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 
-public class StreamPlayer extends Thread{
+public class StreamPlayerSwing extends Thread{
 
 	private static final Queue<Frame> frames = new LinkedList<>();
 	private volatile boolean running = false;
 	private int port;
 
-	public StreamPlayer(int port) {
+	public StreamPlayerSwing(int port) {
 		this.port = port;
 	}
 

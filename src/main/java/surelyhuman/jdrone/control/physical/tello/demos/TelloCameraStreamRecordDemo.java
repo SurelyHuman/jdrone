@@ -6,8 +6,8 @@ import main.java.surelyhuman.jdrone.control.physical.tello.TelloDrone;
 
 public class TelloCameraStreamRecordDemo {
 
-	public static void record() throws IOException, InterruptedException {
-		TelloDrone tello = new TelloDrone();
+	public static void record(String filePath) throws IOException, InterruptedException {
+		TelloDrone tello = new TelloDrone(filePath);
 		tello.activateSDK();
 		tello.streamOn();
 		tello.streamRecordOn();
@@ -18,7 +18,7 @@ public class TelloCameraStreamRecordDemo {
 	}
 
 	public static void main(String[] args) throws InterruptedException, IOException {
-		record();
+		record(args[0]);
 		System.exit(0);
 	}
 }

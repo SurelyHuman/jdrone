@@ -7,16 +7,19 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+//import javafx.scene.image.Image;
 import main.java.surelyhuman.jdrone.control.DroneController;
 import main.java.surelyhuman.jdrone.control.physical.MultiRotorDrone;
-import main.java.surelyhuman.jdrone.util.StreamPlayer;
+import main.java.surelyhuman.jdrone.util.StreamPlayerJavaFX;
+import main.java.surelyhuman.jdrone.util.StreamPlayerSwing;
 import main.java.surelyhuman.jdrone.util.StreamRecorder;
 
 public class TelloDrone extends MultiRotorDrone {
 
 	private final int maxGoto = 500, minGoto = -500, minDist = 20, maxSpeed = 100, minSpeed = 10, maxDegrees = 360, minDegrees = 1;
 	private final int maxDist = maxGoto;
-	private StreamPlayer flightCamera;
+	private StreamPlayerSwing flightCameraSwing;
+	private StreamPlayerJavaFX flightCameraJavaFX;
 	private StreamRecorder flightRecorder;
 	//private String filePath = "/Users/MasterControlProgram/git/jdrone/src/VideoRecv.mp4";
 
@@ -28,8 +31,22 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public TelloDrone() throws SocketException, UnknownHostException, FileNotFoundException {
 		this.controller = new DroneController(9000, 8889, "192.168.10.1");
-		flightCamera = new StreamPlayer(11111);
-		flightRecorder = new StreamRecorder(11111);
+		flightCameraSwing = new StreamPlayerSwing(11111);
+		flightCameraJavaFX = new StreamPlayerJavaFX(11111);
+	}
+	
+	/***
+	 * 
+	 * @param filePath
+	 * @throws SocketException
+	 * @throws UnknownHostException
+	 * @throws FileNotFoundException
+	 */
+	public TelloDrone(String filePath) throws SocketException, UnknownHostException, FileNotFoundException {
+		this.controller = new DroneController(9000, 8889, "192.168.10.1");
+		flightCameraSwing = new StreamPlayerSwing(11111);
+		flightCameraJavaFX = new StreamPlayerJavaFX(11111);
+		flightRecorder = new StreamRecorder(11111, filePath);
 	}
 
 	/***
@@ -71,13 +88,25 @@ public class TelloDrone extends MultiRotorDrone {
 		this.controller.sendCommand("streamoff");
 	}
 
-	public void streamViewOn() {
-		flightCamera.start();
+	public void streamViewSwingOn() {
+		flightCameraSwing.start();
 	}
 
-	public void streamViewOff() throws IOException, InterruptedException {
-		flightCamera.closeVideoStream();
+	public void streamViewSwingOff() throws IOException, InterruptedException {
+		flightCameraSwing.closeVideoStream();
 	}
+	
+	public StreamPlayerJavaFX streamViewJavaFXOn() {
+		return flightCameraJavaFX;
+	}
+	
+//	public Image streamViewJavaFXOutput() {
+//		return flightCameraJavaFX.getOutput();
+//	}
+
+//	public void streamViewJavaFXOff() throws IOException, InterruptedException {
+//		flightCameraJavaFX.closeVideoStream();
+//	}
 
 	public void streamRecordOn() {
 		flightRecorder.start();
@@ -204,7 +233,7 @@ public class TelloDrone extends MultiRotorDrone {
 	 */
 	public void gotoXYZ(int x, int y, int z, int speed) throws IOException {
 		int zNext = 0;
-		//		if (getHeight() + z <= 0) z = 10 - getHeight();
+		//if (getHeight() + z <= 0) z = 10 - getHeight();
 		if (z < minGoto) {
 			zNext = z + maxGoto;
 			z = minGoto;
@@ -218,52 +247,53 @@ public class TelloDrone extends MultiRotorDrone {
 		if (speed > maxSpeed) speed = maxSpeed;
 		else if (speed < minSpeed) speed = minSpeed;
 		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) {
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed)); //this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed)); 
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
 			if (zNext > 0) gotoXYZ(0, 0, zNext, speed);
 		}
 		else if ((x > maxGoto && y <= maxGoto && y >= minGoto) || ((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto) && (Math.abs(x) > Math.abs(y)) && (x > maxGoto))) {
 			int partialY = (int) Math.round(slope * maxGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
 			gotoXYZ(x + minGoto, y - partialY, zNext, speed);
 		}
 		else if ((x < minGoto && y <= maxGoto && y >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(x) > Math.abs(y)) && (x < minGoto))) {
 			int partialY = (int) Math.round(slope * minGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, -partialY, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialY, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, -partialY, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialY, z, speed));
 			gotoXYZ(x + maxGoto, y - partialY, zNext, speed);
 		}
 		else if ((y > maxGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y > maxGoto))) {
 			int partialX = (int) Math.round(maxGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
 			gotoXYZ(x - partialX, y + minGoto, zNext, speed);
 		}
 		else if ((y < minGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y < maxGoto))) {
 			int partialX = (int) Math.round(minGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
 			gotoXYZ(x - partialX, y + maxGoto, zNext, speed);
 		}
 		else {
 			if (x > maxGoto && y < minGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
 				gotoXYZ(x + minGoto, y + maxGoto, zNext, speed);
 			}
 			else if (x < minGoto && y > maxGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
 				gotoXYZ(x + maxGoto, y + minGoto, zNext, speed);
 			}
 			else if (x > maxGoto && x == y) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
 				gotoXYZ(x + minGoto, y + minGoto, zNext, speed);
 			}
 			else {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
 				gotoXYZ(x + maxGoto, y + maxGoto, zNext, speed);
 			}
 		}
@@ -282,50 +312,53 @@ public class TelloDrone extends MultiRotorDrone {
 		//System.out.println(slope);
 		if (speed > maxSpeed) speed = maxSpeed;
 		else if (speed < minSpeed) speed = minSpeed;
-		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed)); //this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) {
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+		}
 		else if ((x > maxGoto && y <= maxGoto && y >= minGoto) || ((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto) && (Math.abs(x) > Math.abs(y)) && (x > maxGoto))) {
 			int partialY = (int) Math.round(slope * maxGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, -partialY, z, speed));
 			gotoXY(x + minGoto, y - partialY, speed);
 		}
 		else if ((x < minGoto && y <= maxGoto && y >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(x) > Math.abs(y)) && (x < minGoto))) {
 			int partialY = (int) Math.round(slope * minGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, -partialY, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialY, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, -partialY, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, partialY, z, speed));
 			gotoXY(x + maxGoto, y - partialY, speed);
 		}
 		else if ((y > maxGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y > maxGoto))) {
 			int partialX = (int) Math.round(maxGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
 			gotoXY(x - partialX, y + minGoto, speed);
 		}
 		else if ((y < minGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y < maxGoto))) {
 			int partialX = (int) Math.round(minGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, maxGoto, z, speed));
 			gotoXY(x - partialX, y + maxGoto, speed);
 		}
 		else {
 			if (x > maxGoto && y < minGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, maxGoto, z, speed));
 				gotoXY(x + minGoto, y + maxGoto, speed);
 			}
 			else if (x < minGoto && y > maxGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, minGoto, z, speed));
 				gotoXY(x + maxGoto, y + minGoto, speed);
 			}
 			else if (x > maxGoto && x == y) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", maxGoto, minGoto, z, speed));
 				gotoXY(x + minGoto, y + minGoto, speed);
 			}
 			else {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", minGoto, maxGoto, z, speed));
 				gotoXY(x + maxGoto, y + maxGoto, speed);
 			}
 		}
@@ -358,50 +391,53 @@ public class TelloDrone extends MultiRotorDrone {
 		//System.out.println(slope);
 		if (speed > maxSpeed) speed = maxSpeed;
 		else if (speed < minSpeed) speed = minSpeed;
-		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed)); //this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+		if (x <= maxGoto && x >= minGoto && y <= maxGoto && y >= minGoto) {
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", x, -y, z, speed));
+		}
 		else if ((x > maxGoto && y <= maxGoto && y >= minGoto) || ((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto) && (Math.abs(x) > Math.abs(y)) && (x > maxGoto))) {
 			int partialY = (int) Math.round(slope * maxGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, -partialY, z, speed, ID));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, -partialY, z, speed, ID));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, -partialY, z, speed, ID));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, -partialY, z, speed, ID));
 			gotoMissionPadXY(x + minGoto, y - partialY, speed, ID);
 		}
 		else if ((x < minGoto && y <= maxGoto && y >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(x) > Math.abs(y)) && (x < minGoto))) {
 			int partialY = (int) Math.round(slope * minGoto);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, -partialY, z, speed, ID));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, partialY, z, speed, ID));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, -partialY, z, speed, ID));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, partialY, z, speed, ID));
 			gotoMissionPadXY(x + maxGoto, y - partialY, speed, ID);
 		}
 		else if ((y > maxGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y > maxGoto))) {
 			int partialX = (int) Math.round(maxGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, minGoto, z, speed, ID));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, minGoto, z, speed, ID));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d", partialX, minGoto, z, speed));
 			gotoMissionPadXY(x - partialX, y + minGoto, speed, ID);
 		}
 		else if ((y < minGoto && x <= maxGoto && x >= minGoto) || (((x > maxGoto || x < minGoto) && (y > maxGoto || y < minGoto)) && (Math.abs(y) > Math.abs(x)) && (y < maxGoto))) {
 			int partialX = (int) Math.round(minGoto/slope);
-			System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, maxGoto, z, speed, ID));
-			//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, maxGoto, z, speed, ID));
+			//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, maxGoto, z, speed, ID));
+			this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", partialX, maxGoto, z, speed, ID));
 			gotoMissionPadXY(x - partialX, y + maxGoto, speed, ID);
 		}
 		else {
 			if (x > maxGoto && y < minGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, maxGoto, z, speed, ID));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, maxGoto, z, speed, ID));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, maxGoto, z, speed, ID));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, maxGoto, z, speed, ID));
 				gotoMissionPadXY(x + minGoto, y + maxGoto, speed, ID);
 			}
 			else if (x < minGoto && y > maxGoto) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, minGoto, z, speed, ID));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, minGoto, z, speed, ID));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, minGoto, z, speed, ID));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, minGoto, z, speed, ID));
 				gotoMissionPadXY(x + maxGoto, y + minGoto, speed, ID);
 			}
 			else if (x > maxGoto && x == y) {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, minGoto, z, speed, ID));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, minGoto, z, speed, ID));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, minGoto, z, speed, ID));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", maxGoto, minGoto, z, speed, ID));
 				gotoMissionPadXY(x + minGoto, y + minGoto, speed,ID);
 			}
 			else {
-				System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, ID));
-				//this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, IDcomm));
+				//System.out.println(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, ID));
+				this.controller.sendCommand(String.format("go %1$d %2$d %3$d %4$d %5$s", minGoto, maxGoto, z, speed, ID));
 				gotoMissionPadXY(x + maxGoto, y + maxGoto, speed, ID);
 			}
 		}
