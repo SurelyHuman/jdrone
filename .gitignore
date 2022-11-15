@@ -25,4 +25,4 @@ venv
 node_modules
 .sass-cache
 
-drone-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+# drone-0.0.1-SNAPSHOT-jar-with-dependencies.jar
